@@ -1,0 +1,57 @@
+<?php
+// Define a function to output files in a directory
+function outputFiles($path)
+{
+    // Check directory exists or not
+    if (file_exists($path) && is_dir($path)) {
+        // Scan the files in this directory
+        $result = scandir($path);
+
+        // Filter out the current (.) and parent (..) directories
+        $files = array_diff($result, array('.', '..'));
+
+        if (count($files) > 0) {
+            echo '<ul>';
+            foreach ($files as $file) {
+                if (is_file("$path/$file")) {
+                    $oldFile = $file;
+                    $newFile = modifyName($file);
+                    rename(realpath(dirname(__FILE_)) . "/$path/" . $oldFile, realpath(dirname(__FILE_)) . "/$path/" . $newFile);
+                    echo '<li>';
+                    echo  $newFile;
+                    echo '</li>';
+                } else if (is_dir("$path/$file")) {
+                    $oldDir = $file;
+                    $newDir = modifyName($file);
+                    rename(realpath(dirname(__FILE_)) . "/$path/" . $oldDir, realpath(dirname(__FILE_)) . "/$path/" . $newDir);
+                    echo '<ul>';
+                    echo $newDir;
+                    outputFiles("$path/$newDir");
+                    echo '</ul>';
+                }
+            }
+            echo '</ul>';
+        } else {
+            echo "ERROR: No files found in the directory.";
+        }
+    } else {
+        echo "ERROR: The directory does not exist.";
+    }
+}
+function modifyName($name)
+{
+    $position = strpos($name, '.');
+    $modifiedName = $name;
+    if (true == $position) {
+        if (is_numeric(substr($name, 0, $position)))
+            $modifiedName = intoToAlpha(substr($name, 0, $position)) . substr($name,  $position);
+    }
+    return $modifiedName;
+}
+function intoToAlpha($num)
+{
+    $alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'ZA', 'ZB', 'ZC', 'ZD', 'ZE', 'ZF', 'ZG', 'ZH', 'ZI', 'ZJ', 'ZK', 'Zl', 'ZM', 'ZN', 'ZO', 'ZP', 'ZQ', 'ZR', 'ZS', 'ZT', 'ZU', 'ZV', 'ZW', 'ZX', 'ZY', 'ZZ', 'ZZA', 'ZZB', 'ZZC', 'ZZD', 'ZZE', 'ZZF', 'ZZG', 'ZZH', 'ZZI', 'ZZJ', 'ZZK', 'ZZL', 'ZZM', 'ZZN', 'ZZO', 'ZZP', 'ZZQ', 'ZZR', 'ZZS', 'ZZT', 'ZZU', 'ZZV', 'ZZW', 'ZZX', 'ZZY', 'ZZZ'];
+    return $alpha[$num - 1];
+}
+// Call the function
+outputFiles("udemy");
