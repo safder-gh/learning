@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EmployeePortal.DAL;
 using EmployeePortal.Models;
+using EmployeePortal.SimpleFactory.Managers;
+using EmployeePortal.SimpleFactory.Factory;
+using EmployeePortal.FactoryMethod;
 
 namespace EmployeePortal.Controllers
 {
@@ -59,6 +62,12 @@ namespace EmployeePortal.Controllers
             if (ModelState.IsValid)
             {
                 employee.Id = Guid.NewGuid();
+                //EmployeeFactoryManager employeeFactoryManager = new EmployeeFactoryManager();
+                //IEmployeeManager employeeManager = employeeFactoryManager.GetManager(employee.EmployeeType);
+                //employee.Bonus = employeeManager.GetBonus();
+                //employee.HourlyPay = employeeManager.GetHourlyPay();
+                BaseEmployeeFactory baseEmployeeFactory = new EmployeeManagerFactory().CreateFactory(employee);
+                employee = baseEmployeeFactory.ApplySalary();
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

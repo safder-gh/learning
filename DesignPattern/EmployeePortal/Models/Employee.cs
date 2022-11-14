@@ -32,5 +32,11 @@ namespace EmployeePortal.Models
         [Column("bonus", Order = 6)]
         [Display(Name = "Bonus")]
         public double Bonus { set; get; }
+        [Column("house_allowance", Order = 7)]
+        [Display(Name = "House Allowance")]
+        public double HouseAllowance { set; get; }
+        [Column("medical_allowance", Order = 8)]
+        [Display(Name = "Medical Allowance")]
+        public double MedicalAllowance { set; get; }
     }
 }

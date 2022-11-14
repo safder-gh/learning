@@ -11,6 +11,8 @@ namespace EmployeePortal.Common
         [Display(Name = "Permanent Employee")]
         Permanent,
         [Display(Name = "Temporary Employee")]
-        Temporary
+        Temporary,
+        [Display(Name = "Contract Employee")]
+        Contract
     }
 }
