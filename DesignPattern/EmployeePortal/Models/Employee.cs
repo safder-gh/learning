@@ -38,5 +38,13 @@ namespace EmployeePortal.Models
         [Column("medical_allowance", Order = 8)]
         [Display(Name = "Medical Allowance")]
         public double MedicalAllowance { set; get; }
+        [Display(Name = "Job Type")]
+        [Column("job_type",Order =9)]
+        [Required]
+        public JobType JobType { set; get; }
+        [Display(Name = "Computer Details")]
+        [Column("computer_details",Order =10)]
+        [Required]
+        public string ComputerDetails { set; get; }
     }
 }

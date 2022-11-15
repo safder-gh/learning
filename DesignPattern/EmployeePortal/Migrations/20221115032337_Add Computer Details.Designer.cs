@@ -4,14 +4,16 @@ using EmployeePortal.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EmployeePortal.Migrations
 {
     [DbContext(typeof(DesignPatternContext))]
-    partial class DesignPatternContextModelSnapshot : ModelSnapshot
+    [Migration("20221115032337_Add Computer Details")]
+    partial class AddComputerDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +34,6 @@ namespace EmployeePortal.Migrations
 
                     b.Property<string>("ComputerDetails")
                         .IsRequired()
-                        .HasColumnName("computer_details")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Deleted")
@@ -61,7 +62,6 @@ namespace EmployeePortal.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("JobType")
-                        .HasColumnName("job_type")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
