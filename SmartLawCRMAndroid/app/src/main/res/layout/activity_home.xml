@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:padding="16dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnAvailability"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/btn_shadow_main"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:tag="@string/avilability_info"
+            android:text="@string/avail_status"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/rlPending"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/rlPending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/btnAvailability"
+            app:layout_constraintStart_toStartOf="@+id/btnAvailability"
+            app:layout_constraintBottom_toTopOf="@id/rlMyAccounts"
+            app:layout_constraintTop_toBottomOf="@id/btnAvailability">
+
+            <Button
+                android:id="@+id/btnPedingConsult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/btn_shadow_main"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:tag="@string/pending_consult"
+                android:text="@string/pending_consult"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"  />
+
+            <TextView
+                android:id="@+id/tvPCNumbers"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:padding="6dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:elevation="6dp"
+                android:background="@drawable/notification_circle"
+                android:text="00" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlMyAccounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/btnAvailability"
+            app:layout_constraintStart_toStartOf="@+id/btnAvailability"
+            app:layout_constraintBottom_toTopOf="@+id/btnUpdateCaseNote"
+            app:layout_constraintTop_toBottomOf="@id/rlPending">
+
+            <Button
+                android:id="@+id/btnMyAccounts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/btn_shadow_main"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:tag="@string/my_account_info"
+                android:text="@string/my_clients"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"  />
+
+            <TextView
+                android:id="@+id/tvMANumbers"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:padding="6dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:elevation="6dp"
+                android:background="@drawable/notification_circle"
+                android:text="00" />
+
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnUpdateCaseNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/btn_shadow_main"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:tag="@string/update_case_notes"
+            android:text="@string/update_case_notes"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnAvailability"
+            app:layout_constraintStart_toStartOf="@+id/btnAvailability"
+            app:layout_constraintTop_toBottomOf="@+id/rlMyAccounts" />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

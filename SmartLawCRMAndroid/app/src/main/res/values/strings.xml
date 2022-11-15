@@ -1,0 +1,91 @@
+<resources>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_version">(v)</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="copyright_text">© 2020 SMART LAW CRM</string>
+    <string name="splash_desc">Splash Screen Background</string>
+    <string name="attorneyIdKey">ATTORNEYIDKEY</string>
+    <string name="accountIdKey">ACCOUNTIDKEY</string>
+    <string name="caseIdKey">CASEIDKEY</string>
+    <string name="avilability_info">AVAILABILITYINFO</string>
+    <string name="account_info">ACCOUNTINFO</string>
+    <string name="case_info">CASEINFO</string>
+    <string name="my_account_info">MYACCOUNTINFO</string>
+    <string name="queryWhere">QUERYWHERE</string>
+    <string name="searchType">SEARCHTYPE</string>
+    <string name="app_name">CRM Attorney App</string>
+    <string name="login_user">Enter Username</string>
+    <string name="login_pass">Enter Password</string>
+    <string name="login_url">Enter URL</string>
+    <string name="login">Sign In</string>
+    <string name="logout">Log out</string>
+    <string name="logo">App Logo</string>
+    <string name="refresh">Refresh</string>
+    <string name="home">Home</string>
+    <string name="avail_status">Availability Status</string>
+    <string name="pending_consult">Pending Consults</string>
+    <string name="my_cases">My Cases</string>
+    <string name="my_accounts">My Accounts</string>
+    <string name="my_clients">My Consults</string>
+    <string name="on_call">On Cell:</string>
+    <string name="in_office">In Office:</string>
+    <string name="mobile_phone">Mobile:</string>
+    <string name="work_phone">Work:</string>
+    <string name="mt_type">Matter Type:</string>
+    <string name="cb_time">Call Back:</string>
+    <string name="update_case_notes">Update Case Notes</string>
+    <string name="ct_appear">Court Appearence:</string>
+    <string name="charges">Charges:</string>
+    <string name="ctype">Case Type:</string>
+    <string name="county">County:</string>
+    <string name="cmt_type">Case Matter Type:</string>
+    <string name="ad_charges">Additional Charges:</string>
+    <string name="cSynopsis">Case Synopsis:</string>
+    <string name="up_cnotes">Assign To Me</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="clname">Client Name</string>
+    <string name="clphone">(000) 000-0000</string>
+    <string name="dcnumber">Docket Number</string>
+    <string name="csname">Case Name</string>
+    <string name="chargest">Charges</string>
+    <string name="countyt">County</string>
+    <string name="cSynopsist">Case Synopsis</string>
+    <string name="pnumber">Phone Number</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
+    <string name="txtNote">Text Note</string>
+    <string name="cnotes">Consultation Notes</string>
+    <string name="vNote">Voice Note</string>
+    <string name="csearch">Case Search</string>
+    <string name="search">Search</string>
+    <string name="meetings">Meetings</string>
+    <string name="calls">Calls</string>
+    <string name="tasks">Tasks</string>
+    <string name="item_not_found">No Item Found</string>
+    <string name="channel_pending_consults">Pending Consults</string>
+    <string name="play_services_warning">Google Play Service Not Available</string>
+    <string name="finame">File Name:</string>
+    <string name="back">Back</string>
+    <string name="consultation_ctatus">Consultation Status</string>
+
+
+    <string-array name="android_dropdown_arrays">
+        <item>Select Charges</item>
+        <item>Drop Down List 1</item>
+        <item>Drop Down List 2</item>
+        <item>Drop Down List 3</item>
+        <item>Drop Down List 5</item>
+        <item>Drop Down List 6</item>
+        <item>Drop Down List 7</item>
+        <item>Drop Down List 8</item>
+    </string-array>
+    <string name="notification_case_id">notification_case_id</string>
+    <string name="attachment">Attachment</string>
+
+</resources>

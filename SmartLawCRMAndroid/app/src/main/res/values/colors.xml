@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0073CF</color>
+    <color name="lightColorPrimary">#5ca1ff</color>
+    <color name="mediumColorPrimary">#01bff3</color>
+    <color name="colorPrimaryDark">#014681</color>
+    <color name="secondaryColor">#b26f00</color>
+    <color name="secondaryLightColor">#e99d3c</color>
+    <color name="secondaryDarkColor">#7d4400</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+    <color name="colorAccent">#B26F00</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorWhiteTint">#B3ffffff</color>
+    <color name="back_ground">#E0E2DD</color>
+    <color name="icon_back">#E7E8E8</color>
+    <color name="icon_color">#2F3130</color>
+    <color name="icon_drawer_color">#ffffff</color>
+    <color name="switch_off">#A30101</color>
+    <color name="switch_on">#01A304</color>
+    <color name="switch_ontint">#8001A304</color>
+
+</resources>

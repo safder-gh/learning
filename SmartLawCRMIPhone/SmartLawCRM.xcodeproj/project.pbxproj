@@ -1,0 +1,643 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		126574E9223A9BEC00BA6529 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126574E8223A9BEC00BA6529 /* AppDelegate.swift */; };
+		126574EB223A9BEC00BA6529 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126574EA223A9BEC00BA6529 /* ViewController.swift */; };
+		126574EE223A9BEC00BA6529 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 126574EC223A9BEC00BA6529 /* Main.storyboard */; };
+		126574F0223A9BEC00BA6529 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 126574EF223A9BEC00BA6529 /* Assets.xcassets */; };
+		126574F3223A9BEC00BA6529 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 126574F1223A9BEC00BA6529 /* LaunchScreen.storyboard */; };
+		126574FE223A9BEC00BA6529 /* SmartLawCRMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126574FD223A9BEC00BA6529 /* SmartLawCRMTests.swift */; };
+		12657509223A9BED00BA6529 /* SmartLawCRMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12657508223A9BED00BA6529 /* SmartLawCRMUITests.swift */; };
+		12657547223AA1B000BA6529 /* suitecrm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12657540223A9C5C00BA6529 /* suitecrm.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		126574FA223A9BEC00BA6529 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 126574DD223A9BEC00BA6529 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 126574E4223A9BEC00BA6529;
+			remoteInfo = SmartLawCRM;
+		};
+		12657505223A9BED00BA6529 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 126574DD223A9BEC00BA6529 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 126574E4223A9BEC00BA6529;
+			remoteInfo = SmartLawCRM;
+		};
+		1265753F223A9C5C00BA6529 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1265753A223A9C5B00BA6529 /* suitecrm.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 12657520223A9C5B00BA6529;
+			remoteInfo = suitecrm;
+		};
+		12657541223A9C5C00BA6529 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1265753A223A9C5B00BA6529 /* suitecrm.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 12657529223A9C5B00BA6529;
+			remoteInfo = suitecrmTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		126574E5223A9BEC00BA6529 /* SmartLawCRM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartLawCRM.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		126574E8223A9BEC00BA6529 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		126574EA223A9BEC00BA6529 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		126574ED223A9BEC00BA6529 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		126574EF223A9BEC00BA6529 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		126574F2223A9BEC00BA6529 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		126574F4223A9BEC00BA6529 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		126574F9223A9BEC00BA6529 /* SmartLawCRMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartLawCRMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		126574FD223A9BEC00BA6529 /* SmartLawCRMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartLawCRMTests.swift; sourceTree = "<group>"; };
+		126574FF223A9BEC00BA6529 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		12657504223A9BED00BA6529 /* SmartLawCRMUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartLawCRMUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		12657508223A9BED00BA6529 /* SmartLawCRMUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartLawCRMUITests.swift; sourceTree = "<group>"; };
+		1265750A223A9BED00BA6529 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1265753A223A9C5B00BA6529 /* suitecrm.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = suitecrm.xcodeproj; path = suitecrm/suitecrm.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		126574E2223A9BEC00BA6529 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12657547223AA1B000BA6529 /* suitecrm.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		126574F6223A9BEC00BA6529 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		12657501223A9BED00BA6529 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		126574DC223A9BEC00BA6529 = {
+			isa = PBXGroup;
+			children = (
+				1265753A223A9C5B00BA6529 /* suitecrm.xcodeproj */,
+				126574E7223A9BEC00BA6529 /* SmartLawCRM */,
+				126574FC223A9BEC00BA6529 /* SmartLawCRMTests */,
+				12657507223A9BED00BA6529 /* SmartLawCRMUITests */,
+				126574E6223A9BEC00BA6529 /* Products */,
+				12657545223AA08E00BA6529 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		126574E6223A9BEC00BA6529 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				126574E5223A9BEC00BA6529 /* SmartLawCRM.app */,
+				126574F9223A9BEC00BA6529 /* SmartLawCRMTests.xctest */,
+				12657504223A9BED00BA6529 /* SmartLawCRMUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		126574E7223A9BEC00BA6529 /* SmartLawCRM */ = {
+			isa = PBXGroup;
+			children = (
+				126574E8223A9BEC00BA6529 /* AppDelegate.swift */,
+				126574EA223A9BEC00BA6529 /* ViewController.swift */,
+				126574EC223A9BEC00BA6529 /* Main.storyboard */,
+				126574EF223A9BEC00BA6529 /* Assets.xcassets */,
+				126574F1223A9BEC00BA6529 /* LaunchScreen.storyboard */,
+				126574F4223A9BEC00BA6529 /* Info.plist */,
+			);
+			path = SmartLawCRM;
+			sourceTree = "<group>";
+		};
+		126574FC223A9BEC00BA6529 /* SmartLawCRMTests */ = {
+			isa = PBXGroup;
+			children = (
+				126574FD223A9BEC00BA6529 /* SmartLawCRMTests.swift */,
+				126574FF223A9BEC00BA6529 /* Info.plist */,
+			);
+			path = SmartLawCRMTests;
+			sourceTree = "<group>";
+		};
+		12657507223A9BED00BA6529 /* SmartLawCRMUITests */ = {
+			isa = PBXGroup;
+			children = (
+				12657508223A9BED00BA6529 /* SmartLawCRMUITests.swift */,
+				1265750A223A9BED00BA6529 /* Info.plist */,
+			);
+			path = SmartLawCRMUITests;
+			sourceTree = "<group>";
+		};
+		1265753B223A9C5B00BA6529 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				12657540223A9C5C00BA6529 /* suitecrm.framework */,
+				12657542223A9C5C00BA6529 /* suitecrmTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		12657545223AA08E00BA6529 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		126574E4223A9BEC00BA6529 /* SmartLawCRM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1265750D223A9BED00BA6529 /* Build configuration list for PBXNativeTarget "SmartLawCRM" */;
+			buildPhases = (
+				126574E1223A9BEC00BA6529 /* Sources */,
+				126574E2223A9BEC00BA6529 /* Frameworks */,
+				126574E3223A9BEC00BA6529 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartLawCRM;
+			productName = SmartLawCRM;
+			productReference = 126574E5223A9BEC00BA6529 /* SmartLawCRM.app */;
+			productType = "com.apple.product-type.application";
+		};
+		126574F8223A9BEC00BA6529 /* SmartLawCRMTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 12657510223A9BED00BA6529 /* Build configuration list for PBXNativeTarget "SmartLawCRMTests" */;
+			buildPhases = (
+				126574F5223A9BEC00BA6529 /* Sources */,
+				126574F6223A9BEC00BA6529 /* Frameworks */,
+				126574F7223A9BEC00BA6529 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				126574FB223A9BEC00BA6529 /* PBXTargetDependency */,
+			);
+			name = SmartLawCRMTests;
+			productName = SmartLawCRMTests;
+			productReference = 126574F9223A9BEC00BA6529 /* SmartLawCRMTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		12657503223A9BED00BA6529 /* SmartLawCRMUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 12657513223A9BED00BA6529 /* Build configuration list for PBXNativeTarget "SmartLawCRMUITests" */;
+			buildPhases = (
+				12657500223A9BED00BA6529 /* Sources */,
+				12657501223A9BED00BA6529 /* Frameworks */,
+				12657502223A9BED00BA6529 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				12657506223A9BED00BA6529 /* PBXTargetDependency */,
+			);
+			name = SmartLawCRMUITests;
+			productName = SmartLawCRMUITests;
+			productReference = 12657504223A9BED00BA6529 /* SmartLawCRMUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		126574DD223A9BEC00BA6529 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Knowledge Management";
+				TargetAttributes = {
+					126574E4223A9BEC00BA6529 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					126574F8223A9BEC00BA6529 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 126574E4223A9BEC00BA6529;
+					};
+					12657503223A9BED00BA6529 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 126574E4223A9BEC00BA6529;
+					};
+				};
+			};
+			buildConfigurationList = 126574E0223A9BEC00BA6529 /* Build configuration list for PBXProject "SmartLawCRM" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 126574DC223A9BEC00BA6529;
+			productRefGroup = 126574E6223A9BEC00BA6529 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1265753B223A9C5B00BA6529 /* Products */;
+					ProjectRef = 1265753A223A9C5B00BA6529 /* suitecrm.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				126574E4223A9BEC00BA6529 /* SmartLawCRM */,
+				126574F8223A9BEC00BA6529 /* SmartLawCRMTests */,
+				12657503223A9BED00BA6529 /* SmartLawCRMUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		12657540223A9C5C00BA6529 /* suitecrm.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = suitecrm.framework;
+			remoteRef = 1265753F223A9C5C00BA6529 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		12657542223A9C5C00BA6529 /* suitecrmTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = suitecrmTests.xctest;
+			remoteRef = 12657541223A9C5C00BA6529 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		126574E3223A9BEC00BA6529 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				126574F3223A9BEC00BA6529 /* LaunchScreen.storyboard in Resources */,
+				126574F0223A9BEC00BA6529 /* Assets.xcassets in Resources */,
+				126574EE223A9BEC00BA6529 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		126574F7223A9BEC00BA6529 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		12657502223A9BED00BA6529 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		126574E1223A9BEC00BA6529 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				126574EB223A9BEC00BA6529 /* ViewController.swift in Sources */,
+				126574E9223A9BEC00BA6529 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		126574F5223A9BEC00BA6529 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				126574FE223A9BEC00BA6529 /* SmartLawCRMTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		12657500223A9BED00BA6529 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12657509223A9BED00BA6529 /* SmartLawCRMUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		126574FB223A9BEC00BA6529 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 126574E4223A9BEC00BA6529 /* SmartLawCRM */;
+			targetProxy = 126574FA223A9BEC00BA6529 /* PBXContainerItemProxy */;
+		};
+		12657506223A9BED00BA6529 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 126574E4223A9BEC00BA6529 /* SmartLawCRM */;
+			targetProxy = 12657505223A9BED00BA6529 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		126574EC223A9BEC00BA6529 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				126574ED223A9BEC00BA6529 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		126574F1223A9BEC00BA6529 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				126574F2223A9BEC00BA6529 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1265750B223A9BED00BA6529 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1265750C223A9BED00BA6529 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1265750E223A9BED00BA6529 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SmartLawCRM/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = www.kmincorp.com.SmartLawCRM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1265750F223A9BED00BA6529 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SmartLawCRM/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = www.kmincorp.com.SmartLawCRM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		12657511223A9BED00BA6529 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SmartLawCRMTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = www.kmincorp.com.SmartLawCRMTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartLawCRM.app/SmartLawCRM";
+			};
+			name = Debug;
+		};
+		12657512223A9BED00BA6529 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SmartLawCRMTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = www.kmincorp.com.SmartLawCRMTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartLawCRM.app/SmartLawCRM";
+			};
+			name = Release;
+		};
+		12657514223A9BED00BA6529 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SmartLawCRMUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = www.kmincorp.com.SmartLawCRMUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SmartLawCRM;
+			};
+			name = Debug;
+		};
+		12657515223A9BED00BA6529 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SmartLawCRMUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = www.kmincorp.com.SmartLawCRMUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SmartLawCRM;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		126574E0223A9BEC00BA6529 /* Build configuration list for PBXProject "SmartLawCRM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1265750B223A9BED00BA6529 /* Debug */,
+				1265750C223A9BED00BA6529 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1265750D223A9BED00BA6529 /* Build configuration list for PBXNativeTarget "SmartLawCRM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1265750E223A9BED00BA6529 /* Debug */,
+				1265750F223A9BED00BA6529 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		12657510223A9BED00BA6529 /* Build configuration list for PBXNativeTarget "SmartLawCRMTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				12657511223A9BED00BA6529 /* Debug */,
+				12657512223A9BED00BA6529 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		12657513223A9BED00BA6529 /* Build configuration list for PBXNativeTarget "SmartLawCRMUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				12657514223A9BED00BA6529 /* Debug */,
+				12657515223A9BED00BA6529 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 126574DD223A9BEC00BA6529 /* Project object */;
+}
