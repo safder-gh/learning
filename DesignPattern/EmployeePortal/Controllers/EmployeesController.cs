@@ -10,6 +10,7 @@ using EmployeePortal.Models;
 using EmployeePortal.SimpleFactory.Managers;
 using EmployeePortal.SimpleFactory.Factory;
 using EmployeePortal.FactoryMethod;
+using EmployeePortal.AbstractFactory;
 
 namespace EmployeePortal.Controllers
 {
@@ -68,6 +69,9 @@ namespace EmployeePortal.Controllers
                 //employee.HourlyPay = employeeManager.GetHourlyPay();
                 BaseEmployeeFactory baseEmployeeFactory = new EmployeeManagerFactory().CreateFactory(employee);
                 employee = baseEmployeeFactory.ApplySalary();
+                IComputerFactory computerFactory = new EmployeeSystemFactory().Create(employee);
+                EmployeeSystemManager employeeSystemManager = new EmployeeSystemManager(computerFactory);
+                employee.ComputerDetails = employeeSystemManager.GetsystemDetails();
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

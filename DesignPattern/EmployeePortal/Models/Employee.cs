@@ -43,8 +43,7 @@ namespace EmployeePortal.Models
         [Required]
         public JobType JobType { set; get; }
         [Display(Name = "Computer Details")]
-        [Column("computer_details",Order =10)]
-        [Required]
-        public string ComputerDetails { set; get; }
+        [Column("computer_details", Order = 10)]
+        public string ComputerDetails { set; get; } = "Not Applicable";
     }
 }
