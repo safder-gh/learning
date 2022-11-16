@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeePortal.ViewModel;
 
 namespace EmployeePortal.DAL
 {
@@ -14,5 +15,6 @@ namespace EmployeePortal.DAL
 
         }
         public DbSet<Employee> Employees { set; get; }
+        public DbSet<EmployeePortal.ViewModel.SystemConfigurationDetails> SystemConfigurationDetails { get; set; }
     }
 }

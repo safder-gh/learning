@@ -38,11 +38,27 @@ namespace EmployeePortal.Common
     }
     public enum Processors
     {
-        [Display(Name ="I3")]
+        [Display(Name = "I3")]
         I3,
-        [Display(Name ="I5")]
+        [Display(Name = "I5")]
         I5,
-        [Display(Name ="I7")]
+        [Display(Name = "I7")]
         I7
+    }
+    public enum RAM
+    {
+        [Display(Name = "8GB RAM")]
+        GB8,
+        [Display(Name = "16GB RAM")]
+        GB16,
+        [Display(Name = "32GB RAM")]
+        GB32
+    }
+    public enum HDD
+    {
+        [Display(Name = "500 GB")]
+        GB500,
+        [Display(Name = "1 TB")]
+        TB1,
     }
 }

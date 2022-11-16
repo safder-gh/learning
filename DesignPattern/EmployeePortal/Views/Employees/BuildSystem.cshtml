@@ -1,0 +1,43 @@
+﻿@model System.Guid
+
+@{
+    ViewData["Title"] = "BuildSystem";
+}
+
+<h1>BuildSystem</h1>
+
+<h4>SystemConfigurationDetails</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="BuildSystem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="Id" value="@Model" />
+            <div class="form-group">
+                <label name="RAM" class="control-label"></label>
+                <select name="RAM" title="RAM" asp-items="Html.GetEnumSelectList<RAM>()" class="form-control">
+                    <option value="">---------------</option>
+                </select>
+                <span  name="RAM" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label name="HDD" class="control-label"></label>
+                <select name="HDD" title="HDD" asp-items="Html.GetEnumSelectList<HDD>()" class="form-control">
+                    <option value="">---------------</option>
+                </select>
+                <span name="HDD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

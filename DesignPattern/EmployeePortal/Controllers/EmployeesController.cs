@@ -11,6 +11,7 @@ using EmployeePortal.SimpleFactory.Managers;
 using EmployeePortal.SimpleFactory.Factory;
 using EmployeePortal.FactoryMethod;
 using EmployeePortal.AbstractFactory;
+using EmployeePortal.ViewModel;
 
 namespace EmployeePortal.Controllers
 {
@@ -28,7 +29,10 @@ namespace EmployeePortal.Controllers
         {
             return View(await _context.Employees.ToListAsync());
         }
-
+        public IActionResult BuildSystem(Guid? id)
+        {
+            return View((Guid)id );
+        }
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {

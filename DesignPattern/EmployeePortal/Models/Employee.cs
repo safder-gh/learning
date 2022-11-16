@@ -45,5 +45,8 @@ namespace EmployeePortal.Models
         [Display(Name = "Computer Details")]
         [Column("computer_details", Order = 10)]
         public string ComputerDetails { set; get; } = "Not Applicable";
+        [Column("system_configuration_details",Order = 11)]
+        [Display(Name ="System configuration Details")]
+        public string SystemConfigurationDetails { set; get; }
     }
 }
