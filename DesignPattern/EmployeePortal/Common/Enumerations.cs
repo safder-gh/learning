@@ -61,4 +61,25 @@ namespace EmployeePortal.Common
         [Display(Name = "1 TB")]
         TB1,
     }
+    public enum MOUSE
+    {
+        [Display(Name = "Mouse With Wire")]
+        NORMAL,
+        [Display(Name = "Mouse Without Wire")]
+        WIRELESS,
+    }
+    public enum KEYBOARD
+    {
+        [Display(Name = "Keyboard With Wire")]
+        NORMAL,
+        [Display(Name = "Keyboard Without Wire")]
+        WIRELESS,
+    }
+    public enum TOUCHSCREEN
+    {
+        [Display(Name = "Touch Screen Enable")]
+        ENABLE,
+        [Display(Name = "Touch Screen Disable")]
+        DISABLE,
+    }
 }

@@ -29,9 +29,19 @@ namespace EmployeePortal.Controllers
         {
             return View(await _context.Employees.ToListAsync());
         }
+        [HttpGet]
         public IActionResult BuildSystem(Guid? id)
         {
             return View((Guid)id );
+        }
+        [HttpPost]
+        public IActionResult BuildSystem([Bind("Id","RAM","HDD")] SystemConfigurationDetails systemConfigurationDetails)
+        {
+            Employee employee = _context.Employees.Find(systemConfigurationDetails.Id);
+            employee.SystemConfigurationDetails = systemConfigurationDetails.BuidSystem();
+            _context.Entry(employee).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
         // GET: Employees/Details/5
         public async Task<IActionResult> Details(Guid? id)

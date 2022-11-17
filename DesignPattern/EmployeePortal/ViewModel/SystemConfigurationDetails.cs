@@ -3,15 +3,27 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EmployeePortal.ViewModel
 {
     public class SystemConfigurationDetails
     {
+        public SystemConfigurationDetails()
+        {
+
+        }
         public SystemConfigurationDetails(Guid Id)
         {
             this.Id = Id;
+        }
+        public string BuidSystem()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(string.Format("RAM Size {0} ", EnumHelper<RAM>.GetDisplayValue(RAM)));
+            stringBuilder.Append(string.Format("HDD Size {0} ", EnumHelper<HDD>.GetDisplayValue(HDD)));
+            return stringBuilder.ToString();
         }
         [Key]
         public Guid Id { set; get; }
