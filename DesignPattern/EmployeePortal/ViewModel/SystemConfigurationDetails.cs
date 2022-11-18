@@ -33,5 +33,14 @@ namespace EmployeePortal.ViewModel
         [Display(Name = "HDD Size")]
         [Required]
         public HDD HDD { set; get; }
+        [Display(Name = "Touch Screen")]
+        [Required]
+        public TOUCHSCREEN TOUCHSCREEN { set; get; }
+        [Display(Name = "Keyboard")]
+        [Required]
+        public KEYBOARD KEYBOARD { set; get; }
+        [Display(Name = "Mouse")]
+        [Required]
+        public MOUSE MOUSE { set; get; }
     }
 }

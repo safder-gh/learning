@@ -8,10 +8,10 @@ namespace EmployeePortal.Builder.Product
 {
     public class ComputerSystem
     {
-        public RAM RAM { set; get; }
-        public HDD HDD { set; get; }
-        public KEYBOARD KEYBOARD { set; get; }
-        public MOUSE MOUSE { set; get; }
-        public TOUCHSCREEN TOUCHSCREEN { set; get; }
+        public string RAM { set; get; }
+        public string HDD { set; get; }
+        public string KEYBOARD { set; get; }
+        public string MOUSE { set; get; }
+        public string TOUCHSCREEN { set; get; }
     }
 }

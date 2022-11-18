@@ -32,10 +32,18 @@ namespace EmployeePortal.Controllers
         [HttpGet]
         public IActionResult BuildSystem(Guid? id)
         {
-            return View((Guid)id );
+            Employee employee = _context.Employees.Find(id);
+            if (employee.ComputerDetails.Contains("Laptop"))
+            {
+                return View("LaptopSystem", (Guid)id);
+            }
+            else
+            {
+                return View("DesktopSystem", (Guid)id);
+            }
         }
         [HttpPost]
-        public IActionResult BuildSystem([Bind("Id","RAM","HDD")] SystemConfigurationDetails systemConfigurationDetails)
+        public IActionResult BuildSystem([Bind("Id", "RAM", "HDD")] SystemConfigurationDetails systemConfigurationDetails)
         {
             Employee employee = _context.Employees.Find(systemConfigurationDetails.Id);
             employee.SystemConfigurationDetails = systemConfigurationDetails.BuidSystem();
@@ -72,7 +80,7 @@ namespace EmployeePortal.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,JD,EmployeeType,HourlyPay,Bonus,Id,Deleted")] Employee employee)
+        public async Task<IActionResult> Create([Bind("FirstName,LastName,JD,EmployeeType,JobType,HourlyPay,Bonus,Id,Deleted")] Employee employee)
         {
             if (ModelState.IsValid)
             {

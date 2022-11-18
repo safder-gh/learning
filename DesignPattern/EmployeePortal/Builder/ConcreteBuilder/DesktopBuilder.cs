@@ -17,27 +17,27 @@ namespace EmployeePortal.Builder.ConcreteBuilder
             throw new NotImplementedException();
         }
 
-        public void SetHDD(HDD value)
+        public void SetHDD(string HDD)
         {
-            DesktopSystem.HDD = value;
+            DesktopSystem.HDD = HDD;
         }
 
-        public void SetKEYBOARD(KEYBOARD value)
+        public void SetKEYBOARD(string KEYBOARD)
         {
-            DesktopSystem.KEYBOARD = value;
+            DesktopSystem.KEYBOARD = KEYBOARD;
         }
 
-        public void SetMOUSE(MOUSE value)
+        public void SetMOUSE(string MOUSE)
         {
-            DesktopSystem.MOUSE = value;
+            DesktopSystem.MOUSE = MOUSE;
         }
 
-        public void SetRAM(RAM value)
+        public void SetRAM(string RAM)
         {
-            DesktopSystem.RAM = value;
+            DesktopSystem.RAM = RAM;
         }
 
-        public void SetTOUCHSCREEN(TOUCHSCREEN value)
+        public void SetTOUCHSCREEN(string TOUCHSCREEN)
         {
             return;
         }
