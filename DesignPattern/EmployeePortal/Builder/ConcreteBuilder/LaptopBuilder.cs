@@ -17,29 +17,32 @@ namespace EmployeePortal.Builder.ConcreteBuilder
             return Laptop;
         }
 
-        public void SetHDD(string HDD)
+        public ISystemBuilder SetHDD(string HDD)
         {
-            Laptop.HDD = HDD;
+            Laptop.HDD = EnumHelper<HDD>.GetDisplayValue( EnumHelper<HDD>.Parse(HDD));
+            return this;
         }
 
-        public void SetKEYBOARD(string KEYBOARD)
+        public ISystemBuilder SetKEYBOARD(string KEYBOARD)
         {
-            return;
+            return this;
         }
 
-        public void SetMOUSE(string MOUSE)
+        public ISystemBuilder SetMOUSE(string MOUSE)
         {
-            return;
+            return this;
         }
 
-        public void SetRAM(string RAM)
+        public ISystemBuilder SetRAM(string RAM)
         {
-            Laptop.RAM = RAM;
+            Laptop.RAM = EnumHelper<RAM>.GetDisplayValue(EnumHelper<RAM>.Parse(RAM));
+            return this;
         }
 
-        public void SetTOUCHSCREEN(string TOUCHSCREEN)
+        public ISystemBuilder SetTOUCHSCREEN(string TOUCHSCREEN)
         {
-            Laptop.TOUCHSCREEN = TOUCHSCREEN;
+            Laptop.TOUCHSCREEN = EnumHelper<TOUCHSCREEN>.GetDisplayValue(EnumHelper<TOUCHSCREEN>.Parse(TOUCHSCREEN));
+            return this;
         }
     }
 }

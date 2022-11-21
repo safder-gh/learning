@@ -12,11 +12,11 @@ namespace EmployeePortal.Builder.Director
     {
         public void BuildSystem(ISystemBuilder systemBuilder,IFormCollection valueCollection) 
         {
-            systemBuilder.SetHDD(valueCollection["HDD"].ToString());
-            systemBuilder.SetKEYBOARD(valueCollection["KEYBOARD"].ToString());
-            systemBuilder.SetMOUSE(valueCollection["MOUSE"].ToString());
-            systemBuilder.SetRAM(valueCollection["RAM"].ToString());
-            systemBuilder.SetTOUCHSCREEN(valueCollection["TOUCHSCREEN"].ToString());
+            systemBuilder.SetHDD(valueCollection["HDD"].ToString())
+            .SetKEYBOARD(valueCollection["KEYBOARD"].ToString())
+            .SetMOUSE(valueCollection["MOUSE"].ToString())
+            .SetRAM(valueCollection["RAM"].ToString())
+            .SetTOUCHSCREEN(valueCollection["TOUCHSCREEN"].ToString());
         }
     }
 }

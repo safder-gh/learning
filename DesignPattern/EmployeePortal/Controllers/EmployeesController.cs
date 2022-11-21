@@ -56,6 +56,8 @@ namespace EmployeePortal.Controllers
             configurationBuilder.BuildSystem(systemBuilder, formCollection);
             ComputerSystem computerSystem = systemBuilder.GetSystem();
             employee.SystemConfigurationDetails = String.Format("RAM {0} , HDD {1} , Keyboard {2} , Mouse {3} , Touchscreen {4} ",computerSystem.RAM,computerSystem.HDD,computerSystem.KEYBOARD,computerSystem.MOUSE,computerSystem.TOUCHSCREEN);
+            _context.Entry(employee).State = EntityState.Modified;
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
         [HttpPost]
@@ -67,6 +69,8 @@ namespace EmployeePortal.Controllers
             configurationBuilder.BuildSystem(systemBuilder, formCollection);
             ComputerSystem computerSystem = systemBuilder.GetSystem();
             employee.SystemConfigurationDetails = String.Format("RAM {0} , HDD {1} , Keyboard {2} , Mouse {3} , Touchscreen {4} ", computerSystem.RAM, computerSystem.HDD, computerSystem.KEYBOARD, computerSystem.MOUSE, computerSystem.TOUCHSCREEN);
+            _context.Entry(employee).State = EntityState.Modified;
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
         [HttpPost]

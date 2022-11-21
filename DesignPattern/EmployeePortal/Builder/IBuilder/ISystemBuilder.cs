@@ -9,11 +9,11 @@ namespace EmployeePortal.Builder.IBuilder
 {
     public interface ISystemBuilder
     {
-        void SetRAM(string RAM);
-        void SetHDD(string HDD);
-        void SetMOUSE(string MOUSE);
-        void SetKEYBOARD(string KEYBOARD);
-        void SetTOUCHSCREEN(string TOUCHSCREEN);
+        ISystemBuilder SetRAM(string RAM);
+        ISystemBuilder SetHDD(string HDD);
+        ISystemBuilder SetMOUSE(string MOUSE);
+        ISystemBuilder SetKEYBOARD(string KEYBOARD);
+        ISystemBuilder SetTOUCHSCREEN(string TOUCHSCREEN);
         ComputerSystem GetSystem();
     }
 }
