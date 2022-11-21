@@ -14,7 +14,7 @@ namespace EmployeePortal.Builder.ConcreteBuilder
 
         public ComputerSystem GetSystem()
         {
-            throw new NotImplementedException();
+          return DesktopSystem;
         }
 
         public void SetHDD(string HDD)

@@ -12,6 +12,11 @@ using EmployeePortal.SimpleFactory.Factory;
 using EmployeePortal.FactoryMethod;
 using EmployeePortal.AbstractFactory;
 using EmployeePortal.ViewModel;
+using Microsoft.AspNetCore.Http;
+using EmployeePortal.Builder.IBuilder;
+using EmployeePortal.Builder.Director;
+using EmployeePortal.Builder.ConcreteBuilder;
+using EmployeePortal.Builder.Product;
 
 namespace EmployeePortal.Controllers
 {
@@ -43,7 +48,29 @@ namespace EmployeePortal.Controllers
             }
         }
         [HttpPost]
-        public IActionResult BuildSystem([Bind("Id", "RAM", "HDD")] SystemConfigurationDetails systemConfigurationDetails)
+        public IActionResult DesktopSystem(IFormCollection formCollection)
+        {
+            Employee employee = _context.Employees.Find(new Guid(formCollection["id"]));
+            ISystemBuilder systemBuilder = new DesktopBuilder();
+            ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.BuildSystem(systemBuilder, formCollection);
+            ComputerSystem computerSystem = systemBuilder.GetSystem();
+            employee.SystemConfigurationDetails = String.Format("RAM {0} , HDD {1} , Keyboard {2} , Mouse {3} , Touchscreen {4} ",computerSystem.RAM,computerSystem.HDD,computerSystem.KEYBOARD,computerSystem.MOUSE,computerSystem.TOUCHSCREEN);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult LaptopSystem(IFormCollection formCollection)
+        {
+            Employee employee = _context.Employees.Find(new Guid(formCollection["id"]));
+            ISystemBuilder systemBuilder = new LaptopBuilder();
+            ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.BuildSystem(systemBuilder, formCollection);
+            ComputerSystem computerSystem = systemBuilder.GetSystem();
+            employee.SystemConfigurationDetails = String.Format("RAM {0} , HDD {1} , Keyboard {2} , Mouse {3} , Touchscreen {4} ", computerSystem.RAM, computerSystem.HDD, computerSystem.KEYBOARD, computerSystem.MOUSE, computerSystem.TOUCHSCREEN);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult BuildSystem([Bind("Id", "RAM", "HDD", "TOUCHSCREEN", "KEYBOARD", "MOUSE")] SystemConfigurationDetails systemConfigurationDetails)
         {
             Employee employee = _context.Employees.Find(systemConfigurationDetails.Id);
             employee.SystemConfigurationDetails = systemConfigurationDetails.BuidSystem();

@@ -1,4 +1,5 @@
 ﻿using EmployeePortal.Builder.IBuilder;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -9,13 +10,13 @@ namespace EmployeePortal.Builder.Director
 {
     public class ConfigurationBuilder
     {
-        public void BuildSystem(ISystemBuilder systemBuilder,NameValueCollection valueCollection) 
+        public void BuildSystem(ISystemBuilder systemBuilder,IFormCollection valueCollection) 
         {
-            systemBuilder.SetHDD(valueCollection["HDD"]);
-            systemBuilder.SetKEYBOARD(valueCollection["KEYBOARD"]);
-            systemBuilder.SetMOUSE(valueCollection["MOUSE"]);
-            systemBuilder.SetRAM(valueCollection["RAM"]);
-            systemBuilder.SetTOUCHSCREEN(valueCollection["TOUCHSCREEN"]);
+            systemBuilder.SetHDD(valueCollection["HDD"].ToString());
+            systemBuilder.SetKEYBOARD(valueCollection["KEYBOARD"].ToString());
+            systemBuilder.SetMOUSE(valueCollection["MOUSE"].ToString());
+            systemBuilder.SetRAM(valueCollection["RAM"].ToString());
+            systemBuilder.SetTOUCHSCREEN(valueCollection["TOUCHSCREEN"].ToString());
         }
     }
 }

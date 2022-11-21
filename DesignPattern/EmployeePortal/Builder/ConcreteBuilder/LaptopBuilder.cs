@@ -10,16 +10,16 @@ namespace EmployeePortal.Builder.ConcreteBuilder
 {
     public class LaptopBuilder : ISystemBuilder
     {
-        ComputerSystem Desktop = new ComputerSystem();
+        ComputerSystem Laptop = new ComputerSystem();
 
         public ComputerSystem GetSystem()
         {
-            throw new NotImplementedException();
+            return Laptop;
         }
 
         public void SetHDD(string HDD)
         {
-            Desktop.HDD = HDD;
+            Laptop.HDD = HDD;
         }
 
         public void SetKEYBOARD(string KEYBOARD)
@@ -34,12 +34,12 @@ namespace EmployeePortal.Builder.ConcreteBuilder
 
         public void SetRAM(string RAM)
         {
-            Desktop.RAM = RAM;
+            Laptop.RAM = RAM;
         }
 
         public void SetTOUCHSCREEN(string TOUCHSCREEN)
         {
-            Desktop.TOUCHSCREEN = TOUCHSCREEN;
+            Laptop.TOUCHSCREEN = TOUCHSCREEN;
         }
     }
 }

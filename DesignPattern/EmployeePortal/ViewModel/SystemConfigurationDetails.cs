@@ -21,26 +21,29 @@ namespace EmployeePortal.ViewModel
         public string BuidSystem()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(string.Format("RAM Size {0} ", EnumHelper<RAM>.GetDisplayValue(RAM)));
-            stringBuilder.Append(string.Format("HDD Size {0} ", EnumHelper<HDD>.GetDisplayValue(HDD)));
+            stringBuilder.Append(string.Format("HDD Size {0}", HDD.HasValue ? EnumHelper<HDD>.GetDisplayValue((HDD)HDD):string.Empty));
+            stringBuilder.Append(string.Format("RAM Size {0}", RAM.HasValue ? EnumHelper<RAM>.GetDisplayValue((RAM)RAM) : string.Empty));
+            stringBuilder.Append(string.Format("Mouse Type {0}", MOUSE.HasValue ? EnumHelper<MOUSE>.GetDisplayValue((MOUSE)MOUSE) : string.Empty));
+            stringBuilder.Append(string.Format("Touchscreen {0}", TOUCHSCREEN.HasValue ? EnumHelper<TOUCHSCREEN>.GetDisplayValue((TOUCHSCREEN)TOUCHSCREEN) : "Not Applicable"));
+            stringBuilder.Append(string.Format("Keyboard Type {0}", KEYBOARD.HasValue ? EnumHelper<KEYBOARD>.GetDisplayValue((KEYBOARD)KEYBOARD) : "Not Applicable"));
             return stringBuilder.ToString();
         }
         [Key]
         public Guid Id { set; get; }
-        [Display(Name="Memory Size")]
+        [Display(Name = "Memory Size")]
         [Required]
-        public RAM RAM { set; get; }
+        public RAM? RAM { set; get; } = null;
         [Display(Name = "HDD Size")]
         [Required]
-        public HDD HDD { set; get; }
+        public HDD? HDD { set; get; } = null;
         [Display(Name = "Touch Screen")]
         [Required]
-        public TOUCHSCREEN TOUCHSCREEN { set; get; }
+        public TOUCHSCREEN? TOUCHSCREEN { set; get; } = null;
         [Display(Name = "Keyboard")]
         [Required]
-        public KEYBOARD KEYBOARD { set; get; }
+        public KEYBOARD? KEYBOARD { set; get; } = null;
         [Display(Name = "Mouse")]
         [Required]
-        public MOUSE MOUSE { set; get; }
+        public MOUSE? MOUSE { set; get; } = null;
     }
 }
