@@ -1,3 +1,10 @@
 
 https://www.youtube.com/watch?v=GqSRnbxFnQ0&list=PL6n9fhu94yhUbctIoxoVTrklN3LMwTCmd&index=16
 http://www.pipsomania.com/best_php_obfuscator.do
+
+
+array(
+                        'pageSizeW' => $paper->getWidth(), 
+                        'pageSizeH' => $paper->getHeight(), 
+                        'orientation' => empty($documentBean->orientation) ? 'portrait' :strtolower($documentBean->orientation)
+                    )
