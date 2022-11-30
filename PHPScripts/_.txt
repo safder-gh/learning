@@ -1,0 +1,1250 @@
+<?php
+namespace PhpOffice\PhpWord;
+require_once 'modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
+require_once 'custom/modules/AOS_Invoices/InvoiceManager.php';
+require_once 'custom/common/Common.php';
+//require_once 'custom/modules/AOS_Invoices/InvoiceManager.php';
+//require_once 'data/SugarBean.php';
+class AbstractDocumentDownloader
+{
+    private $processes = array('description', 'pdffooter', 'pdfheader');
+    private  $docType, $moduleId, $documentTemplateId;
+
+    private $invoiceDetail;
+    private $contractDetail;
+    private $quoteDetail;
+    private $caseDetail;
+    private $clientDetail;
+    private $installmentsList;
+    private $module_name;
+    public function __construct($moduleId, $documentTemplateId, $docType = 'pdf')
+    {
+        $this->docType = $docType;
+        $this->moduleId = $moduleId;
+        $this->documentTemplateId = $documentTemplateId;
+    }
+    public function DoDownload()
+    {
+        try {
+            $documentBean = \BeanFactory::getBean('WordTemplate', $this->documentTemplateId);
+            $this->module_name = $documentBean->modules;
+            $moduleBean = \BeanFactory::getBean($documentBean->modules, $this->moduleId);
+            if ($documentBean->modules == 'AOS_Quotes') {
+                $caseBean = \BeanFactory::getBean('Cases', $moduleBean->acase_id_c);
+                if ($caseBean->personalstatus_c != $documentBean->retainer_type) {
+                    return;
+                }
+            }
+            $documentBean->description = html_entity_decode($documentBean->description, ENT_QUOTES, 'UTF-8');
+            if (empty($documentBean->pdfheader)) {
+                $documentBean->pdfheader = $this->getTextBlock($documentBean->headerid);
+            } else {
+                if (!empty($documentBean->pdfheader)) {
+                    $documentBean->pdfheader = html_entity_decode($documentBean->pdfheader);
+                }
+            }
+            if (empty($documentBean->pdffooter)) {
+                $documentBean->pdffooter = $this->getTextBlock($documentBean->footerid);
+            } else {
+                if (!empty($documentBean->pdffooter)) {
+                    $documentBean->pdffooter = html_entity_decode($documentBean->pdffooter);
+                }
+            }
+            if (empty($documentBean->description)) {
+                $documentBean->description = "<br/>";
+            }
+            if (empty($documentBean->pdfheader)) {
+                $documentBean->pdfheader = "<br/>";
+            }
+            if (empty($documentBean->pdffooter)) {
+                $documentBean->pdffooter = "<br/>";
+            }
+
+            global $current_user;
+
+            $pattern;
+            $matches;
+            foreach ($this->processes as $process) {
+                $pattern = '/{TextBlock:(.*?)}/';
+                $success = preg_match_all($pattern, $documentBean->$process, $matches, PREG_SET_ORDER);
+                if ($success != 0) {
+                    foreach ($matches as $match) {
+                        $documentBean->$process = str_replace($match[0], $this->getTextBlockByName($match[1]), $documentBean->$process);
+                    }
+                }
+                $documentBean->$process = preg_replace_callback(
+                    '/font-family:(.*?);/',
+                    function ($matches) {
+                        $matches[1] = str_replace("'", '', $matches[1]);
+                        switch ($matches[1]) {
+                            case ("Avant que"): {
+                                    $matches[1] = $matches[1] . '...';
+                                    break;
+                                }
+                        }
+                        return 'font-family:' . $matches[1] . ';';
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{CURRENTDATE\}/',
+                    function ($matches) {
+                        return $this->current_user_date();
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{CURRENTDATENUMERIC\}/',
+                    function ($matches) {
+                        return $this->current_user_date_numeric();
+                    },
+                    $documentBean->$process
+                );
+
+                $documentBean->$process = preg_replace_callback(
+                    '/\{CURRENTTIME\}/',
+                    function ($matches) {
+                        return $this->current_user_time();
+                    },
+                    $documentBean->$process
+                );
+
+                $documentBean->$process = preg_replace_callback(
+                    '/\{CURRENTDATETIME\}/',
+                    function ($matches) {
+                        return $this->current_user_datetime();
+                    },
+                    $documentBean->$process
+                );
+
+                $documentBean->$process = preg_replace_callback(
+                    '/\{DATE\s+(.*?)\}/',
+                    function ($matches) {
+                        return date($matches[1]);
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{USER\s+(.*?)\}/',
+                    function ($matches) {
+                        $return = '';
+                        if (isset($GLOBALS['current_user'])) {
+                            switch ($matches[1]) {
+                                case ('N'): {
+                                        $return = $GLOBALS['current_user']->name;
+                                        break;
+                                    }
+                                case ('FN'): {
+                                        $return = $GLOBALS['current_user']->full_name;
+                                        break;
+                                    }
+                                case ('E'): {
+                                        $return = empty($GLOBALS['current_user']->email1) ? (empty($GLOBALS['current_user']->email2) ? 'Email Not Available' : $GLOBALS['current_user']->email2) : $GLOBALS['current_user']->email1;
+                                        break;
+                                    }
+                                default: {
+                                        $return = 'Key not available';
+                                        break;
+                                    }
+                            }
+                        }
+                        return $return;
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{DYNAMIC:(.*?)\}/',
+                    function ($matches) {
+                        $return = '';
+                        switch ($matches[1]) {
+                            case ('LineItems'): {
+                                    $return = $this->getLineItems($this->moduleId);
+                                    break;
+                                }
+                            case ('Invoice'): {
+                                    $invoiceManager = new \InvoiceManager();
+                                    $return = $invoiceManager->getInvoiceforWord($this->moduleId, true);
+                                    break;
+                                }
+                            case ('Invoice-Statement'): {
+                                    $invoiceManager = new \InvoiceManager();
+                                    $return = $invoiceManager->getStatementForWord($this->moduleId);
+                                    break;
+                                }
+                            case ('Payment-Collection'): {
+                                    $invoiceManager = new \InvoiceManager();
+                                    $return = $invoiceManager->getCollectionsForWord($this->moduleId);
+                                    break;
+                                }
+                            case ('Payment-History'): {
+                                    $invoiceManager = new \InvoiceManager();
+                                    $return = $invoiceManager->getPaymentHistoryForWord($this->module_name, $this->moduleId);
+                                    break;
+                                }
+                            case ('PaidPayment-History'): {
+                                    $invoiceManager = new \InvoiceManager();
+                                    $return = $invoiceManager->getPaidPaymentHistoryForWord($this->module_name, $this->moduleId);
+                                    break;
+                                }
+                            case ('Installment-History'): {
+                                    $invoiceManager = new \InvoiceManager();
+                                    $return = $invoiceManager->getInstallmemtHistoryForWord($this->module_name, $this->moduleId);
+                                    break;
+                                }
+                            case ('Court-Appearance'): {
+                                    $return = $this->getAppearance($this->module_name, $this->moduleId);
+                                    break;
+                                }
+                            default: {
+                                    $return = 'Key not available';
+                                    break;
+                                }
+                        }
+                        return $return;
+                    },
+                    $documentBean->$process
+                );
+
+                $documentBean->$process = preg_replace_callback(
+                    '/\{CASE:(.*?)\}/',
+                    function ($matches) {
+                        $return = '';
+                        switch ($matches[1]) {
+                            case ('CLIENTTITLE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTTITLE');
+                                    break;
+                                }
+                            case ('CLIENTFIRSTNAME'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTFIRSTNAME');
+                                    break;
+                                }
+                            case ('CLIENTLASTNAME'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTLASTNAME');
+                                    break;
+                                }
+                            case ('CLIENTSSNO'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTSSNO');
+                                    break;
+                                }
+                            case ('CLIENTPHONE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTPHONE');
+                                    break;
+                                }
+                            case ('CLIENTADDRESS'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTADDRESS');
+                                    break;
+                                }
+                            case ('CLIENTCITY'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTCITY');
+                                    break;
+                                }
+                            case ('CLIENTSTATE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTSTATE');
+                                    break;
+                                }
+                            case ('CLIENTZIPCODE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CLIENTZIPCODE');
+                                    break;
+                                }
+                            case ('JUDGENAME'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'JUDGENAME');
+                                    break;
+                                }
+                            case ('PAYEETITLE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEETITLE');
+                                    break;
+                                }
+                            case ('PAYEEFIRSTNAME'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEEFIRSTNAME');
+                                    break;
+                                }
+                            case ('PAYEELASTNAME'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEELASTNAME');
+                                    break;
+                                }
+                            case ('PAYEESSNO'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEESSNO');
+                                    break;
+                                }
+                            case ('PAYEEPHONE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEEPHONE');
+                                    break;
+                                }
+                            case ('PAYEEADDRESS'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEEADDRESS');
+                                    break;
+                                }
+                            case ('PAYEECITY'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEECITY');
+                                    break;
+                                }
+                            case ('PAYEESTATE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEESTATE');
+                                    break;
+                                }
+                            case ('PAYEEZIPCODE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'PAYEEZIPCODE');
+                                    break;
+                                }
+                            case ('DESCRIPTION'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'DESCRIPTION');
+                                    break;
+                                }
+                            case ('CREATIONDATE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'CREATIONDATE');
+                                    break;
+                                }
+                            case ('INITIALPDATE'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'INITIALPDATE');
+                                    break;
+                                }
+                            case ('RETAINER_AMOUNT'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'RETAINER_AMOUNT');
+                                    break;
+                                }
+                            case ('SERVICE_FEE_AMOUNT'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'SERVICE_FEE_AMOUNT');
+                                    break;
+                                }
+                            case ('BALANCE_AMOUNT'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'BALANCE_AMOUNT');
+                                    break;
+                                }
+                            default: {
+                                    $return = 'Not Available';
+                                    break;
+                                }
+                        }
+                        return $return;
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{CONTRACT:(.*?)\}/',
+                    function ($matches) {
+                        $return = '';
+                        switch ($matches[1]) {
+                            case ('RETAINER_AMOUNT'): {
+                                    $return = $this->getContractDetails($this->module_name, $this->moduleId, 'RETAINER_AMOUNT');
+                                    break;
+                                }
+                            case ('SERVICE_FEE_AMOUNT'): {
+                                    $return = $this->getContractDetails($this->module_name, $this->moduleId, 'SERVICE_FEE_AMOUNT');
+                                    break;
+                                }
+                            default: {
+                                    $return = 'Not Available';
+                                    break;
+                                }
+                        }
+                        return $return;
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{INVOICES:(.*?)\}/',
+                    function ($matches) {
+                        $return = '';
+                        switch ($matches[1]) {
+                            case ('TOTAL_AMOUNT'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'TOTAL_AMOUNT');
+                                    break;
+                                }
+                            case ('REMAINING_AMOUNT'): {
+                                    $return = $this->getExtraDetails($this->module_name, $this->moduleId, 'REMAINING_AMOUNT');
+                                    break;
+                                }
+                            default: {
+                                    $return = 'Not Available';
+                                    break;
+                                }
+                        }
+                        return $return;
+                    },
+                    $documentBean->$process
+                );
+            }
+
+            $this->processModuleFields($documentBean->modules, $documentBean);
+            foreach ($this->processes as $process) {
+                $documentBean->$process = preg_replace_callback(
+                    '/\{{(.*?)\}}/',
+                    function ($matches) {
+                        try {
+                            return eval("return $matches[1];");
+                        } catch (\Exception $e) {
+                            return $e->getMessage();
+                        }
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{FUNCTION:AGEY\((.*?)\)}/',
+                    function ($matches) {
+                        try {
+                            if (strtotime($matches[1])) {
+                                $diff = abs(strtotime($matches[1]) - strtotime(explode(' ', $GLOBALS['timedate']->nowDb())[0]));
+                                return floor($diff / (365 * 60 * 60 * 24));
+                            } else {
+                                return 0;
+                            }
+                        } catch (\Exception $e) {
+                            return $e->getMessage();
+                        }
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{FUNCTION:NUMBERTOWORD\((.*?)\)}/',
+                    function ($matches) {
+                        try {
+                            if ($matches[1] != '') {
+                                $numbertoword = \Common::numberTowords($matches[1]);
+                                return $numbertoword;
+                            } else {
+                                return 0;
+                            }
+                        } catch (\Exception $e) {
+                            return $e->getMessage();
+                        }
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{FUNCTION:DATEADD\((.*?)\)}/',
+                    function ($matches) {
+                        try {
+                            $options = explode(',', $matches[1]);
+                            if (count($options) != 3) {
+                                return 'Wrong number of parameter(date,d|m|y,1).';
+                            } else if (!($options[1] == 'm' || $options[1] == 'M' || $options[1] == 'd' || $options[1] == 'D' || $options[1] == 'y' || $options[1] == 'Y')) {
+                                return 'Use d for day , m for month and y for year.';
+                            } else if (!(is_numeric($options[2]))) {
+                                return 'Only integr values can be use.';
+                            } else {
+                                return $this->dateSub($options[0], $options[2], $options[1]);
+                            }
+                        } catch (\Exception $e) {
+                            return $e->getMessage();
+                        }
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{FUNCTION:DATEADDCOURTAPPEARANCE\((.*?)\)}/',
+                    function ($matches) {
+                        try {
+                            $options = explode(',', $matches[1]);
+                            if (count($options) != 3) {
+                                return 'Wrong number of parameter(date,d|m|y,1).';
+                            } else if (!($options[1] == 'm' || $options[1] == 'M' || $options[1] == 'd' || $options[1] == 'D' || $options[1] == 'y' || $options[1] == 'Y')) {
+                                return 'Use d for day , m for month and y for year.';
+                            } else if (!(is_numeric($options[2]))) {
+                                return 'Only integr values can be use.';
+                            } else {
+                                $courtAppearanceType = $options[0];
+                                $case_id = $this->moduleId;
+                                $courtAppearanceType = str_replace("<span>", "", $courtAppearanceType);
+                                $courtAppearanceType = str_replace("</span>", "", $courtAppearanceType);
+                                $courtAppearanceTypeKey = "";
+                                $courtAppearanceDate = "";
+                                global $app_list_strings;
+                                $coutAppearanceList = $app_list_strings['court_appearance_list'];
+                                foreach ($app_list_strings['court_appearance_list'] as $key => $value) {
+                                    if ($value == $courtAppearanceType) {
+                                        $courtAppearanceTypeKey = $key;
+                                        break;
+                                    }
+                                }
+                                if ($courtAppearanceTypeKey != "") {
+                                    $CA_Bean = \BeanFactory::getBean('ca_courtappearance');
+                                    $CA_Result = $CA_Bean->get_list("court_appearance_date DESC", "{$CA_Bean->table_name}.court_appearance_type='$courtAppearanceTypeKey' and {$CA_Bean->table_name}.acase_id_c='$case_id'");
+                                    foreach ($CA_Result['list'] as $key => $ca) {
+                                        if ($key == 0) {
+                                            $courtAppearanceDate = $ca->court_appearance_date;
+                                        }
+                                    }
+                                }
+                                return $this->dateSubCourtAppearance($courtAppearanceDate, $options[2], $options[1]);
+                            }
+                        } catch (\Exception $e) {
+                            return $e->getMessage();
+                        }
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{FUNCTION:SIGNATURE\((.*?)\)}/',
+                    function ($matches) {
+                        try {
+                            $options = explode(',', $matches[1]);
+                            if (count($options) != 1) {
+                                return 'Wrong number of parameter .';
+                            } else {
+                                $signatureHTML = '';
+                                $user = new \User();
+                                $user = $user->retrieve($options[0]);
+                                if(!empty($user)){
+                                    $signature = $user->getDefaultSignature();
+                                    if ($signature && array_key_exists('signature_html', $signature)) {
+                                        $signatureHTML = from_html($signature['signature_html']);
+                                    }
+                                }
+                                return $signatureHTML;
+                            }
+                        } catch (\Exception $e) {
+                            return $e->getMessage();
+                        }
+                    },
+                    $documentBean->$process
+                );
+                $documentBean->$process = preg_replace_callback(
+                    '/\{FUNCTION:NEXTCOURTAPPEARANCE\((.*?)\)}/',
+                    function ($matches) {
+                        try {
+                            $options = explode(',', $matches[1]);
+                            if (count($options) != 1) {
+                                return 'Wrong number of parameters.';
+                            } else {
+                                $courtAppearanceType = $options[0];
+                                $case_id = $this->moduleId;
+                                $courtAppearanceType = str_replace("<span>", "", $courtAppearanceType);
+                                $courtAppearanceType = str_replace("</span>", "", $courtAppearanceType);
+                                $courtAppearanceTypeKey = "";
+                                $courtAppearanceDate = "";
+                                global $app_list_strings;
+                                //$coutAppearanceList = $app_list_strings['court_appearance_list'];
+                                foreach ($app_list_strings['court_appearance_list'] as $key => $value) {
+                                    if ($value == $courtAppearanceType) {
+                                        $courtAppearanceTypeKey = $key;
+                                        break;
+                                    }
+                                }
+                                if ($courtAppearanceTypeKey != "") {
+                                    $CA_Bean = \BeanFactory::getBean('ca_courtappearance');
+                                    foreach ($CA_Bean->get_full_list('', "{$CA_Bean->table_name}.court_appearance_type='$courtAppearanceTypeKey' and {$CA_Bean->table_name}.acase_id_c='$case_id'") as $ca) {
+                                        $courtAppearanceDate .= date_format(date_create(Common::convertDateToUserFormat($ca->court_appearance_date, true)), "F d, Y \a\\t h:i a") . ". ";
+                                    }
+                                    if ($courtAppearanceDate != "") {
+                                        $courtAppearanceDate = rtrim($courtAppearanceDate, ',');
+                                    }
+                                }
+
+                                return $courtAppearanceDate;
+                            }
+                        } catch (\Exception $e) {
+                            return $e->getMessage();
+                        }
+                    },
+                    $documentBean->$process
+                );
+            }
+
+            $pages = explode('<br />{pagebreak}<br />', $documentBean->description);
+
+            if ($this->docType == 'doc') {
+                $file = \Common::fileNameClean($documentBean->name . '(' . $moduleBean->name . ')') . '.docx';
+                $phpWord = new PhpWord();
+                $paper = new \PhpOffice\PhpWord\Style\Paper();
+                $paper->setSize(empty($documentBean->page_size) ? 'A4':$documentBean->page_size); 
+                foreach ($pages as $index => $page) {
+                    $section = null;
+                    $header = null;
+                    $footer = null;
+                    $section = $phpWord->addSection(array(
+                        'pageSizeW' => $paper->getWidth(), 
+                        'pageSizeH' => $paper->getHeight(), 
+                        'orientation' => empty($documentBean->orientation) ? 'portrait' :strtolower($documentBean->orientation)
+                    ));
+                    $options = explode('_', $documentBean->paging);
+                    if ($documentBean->headeroption == 'all_pages') {
+                        $header = $section->addHeader('default');
+                        if ($options[0] == 'top') {
+                            $header->addPreserveText(
+                                'Page {PAGE} of {NUMPAGES}',
+                                array('color' => '0f0101'),
+                                array('align' => $options[1])
+                            );
+                        }
+
+                        \PhpOffice\PhpWord\Shared\Html::addHtml($header, $documentBean->pdfheader);
+
+                        $footer = $section->addFooter('default');
+                        \PhpOffice\PhpWord\Shared\Html::addHtml($footer, $documentBean->pdffooter);
+                        if ($options[0] == 'bottom') {
+                            $footer->addPreserveText(
+                                'Page {PAGE} of {NUMPAGES}',
+                                array('color' => '0f0101'),
+                                array('align' => $options[1])
+                            );
+                        }
+                    } else if ($documentBean->headeroption == 'first_page_only') {
+                        if ($index == 0) {
+                            $header = $section->addHeader('first');
+                            if ($options[0] == 'top') {
+                                $header->addPreserveText(
+                                    'Page {PAGE} of {NUMPAGES}',
+                                    array('color' => '0f0101'),
+                                    array('align' => $options[1])
+                                );
+                            }
+
+                            \PhpOffice\PhpWord\Shared\Html::addHtml($header, $documentBean->pdfheader);
+
+                            $footer = $section->addFooter('first');
+                            \PhpOffice\PhpWord\Shared\Html::addHtml($footer, $documentBean->pdffooter);
+                            if ($options[0] == 'bottom') {
+                                $footer->addPreserveText(
+                                    'Page {PAGE} of {NUMPAGES}',
+                                    array('color' => '0f0101'),
+                                    array('align' => $options[1])
+                                );
+                            }
+                        }
+                    } else if ($documentBean->headeroption == 'last_page_only') {
+                        if ($index == count($pages) - 1) {
+                            $header = $section->addHeader('first');
+                            if ($options[0] == 'top') {
+                                $header->addPreserveText(
+                                    'Page {PAGE} of {NUMPAGES}',
+                                    array('color' => '0f0101'),
+                                    array('align' => $options[1])
+                                );
+                            }
+
+                            \PhpOffice\PhpWord\Shared\Html::addHtml($header, $documentBean->pdfheader);
+
+                            $footer = $section->addFooter('first');
+                            \PhpOffice\PhpWord\Shared\Html::addHtml($footer, $documentBean->pdffooter);
+                            if ($options[0] == 'bottom') {
+                                $footer->addPreserveText(
+                                    'Page {PAGE} of {NUMPAGES}',
+                                    array('color' => '0f0101'),
+                                    array('align' => $options[1])
+                                );
+                            }
+                        }
+                    } else if ($documentBean->headeroption == 'first_and_last_page_only') {
+                        if ($index == 0 || $index == count($pages) - 1) {
+                            $header = $section->addHeader('first');
+                            if ($options[0] == 'top') {
+                                $header->addPreserveText(
+                                    'Page {PAGE} of {NUMPAGES}',
+                                    array('color' => '0f0101'),
+                                    array('align' => $options[1])
+                                );
+                            }
+
+                            \PhpOffice\PhpWord\Shared\Html::addHtml($header, $documentBean->pdfheader);
+
+                            $footer = $section->addFooter('first');
+                            \PhpOffice\PhpWord\Shared\Html::addHtml($footer, $documentBean->pdffooter);
+                            if ($options[0] == 'bottom') {
+                                $footer->addPreserveText(
+                                    'Page {PAGE} of {NUMPAGES}',
+                                    array('color' => '0f0101'),
+                                    array('align' => $options[1])
+                                );
+                            }
+                        }
+                    }
+                    if ($options[0] == 'top') {
+                        if ($header == null) {
+                            $header = $section->addHeader('default');
+                            $header->addPreserveText(
+                                'Page {PAGE} of {NUMPAGES}',
+                                array('color' => '0f0101'),
+                                array('align' => $options[1])
+                            );
+                        }
+                    } else if ($options[0] == 'bottom') {
+                        if ($footer == null) {
+                            $footer = $section->addFooter('default');
+                            $footer->addPreserveText(
+                                'Page {PAGE} of {NUMPAGES}',
+                                array('color' => '0f0101'),
+                                array('align' => $options[1])
+                            );
+                        }
+                    }
+                    \PhpOffice\PhpWord\Shared\Html::addHtml($section, $page);
+                    //$section->addPageBreak();
+                }
+
+                ob_clean();
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment;filename="' . $file . '"');
+                header('Pragma: no-cache');
+                $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+                $objWriter->save('php://output');
+                exit;
+            } else if ($this->docType == 'pdf') {
+                try {
+                    ob_clean();
+                    $file = \Common::fileNameClean($documentBean->name . '(' . $moduleBean->name . ')') . '.pdf';
+                    $pdf = new \mPDF();
+                    $pdf->SetAutoFont();
+                    $pdf->setAutoTopMargin = 'stretch';
+                    $pdf->setAutoBottomMargin = 'stretch';
+                    $pdf->SetHTMLHeader($documentBean->pdfheader);
+                    $pdf->SetHTMLFooter($documentBean->pdffooter);
+                    foreach ($pages as $page) {
+                        $pdf->AddPage();
+                        $pdf->WriteHTML($page);
+                    }
+
+                    $pdf->Output($file, 'D');
+                    exit;
+                } catch (\mPDF_exception $e) {
+                    echo $e;
+                }
+            }
+        } catch (\Exception $e) {
+
+            echo 'Message: ' . $e->getMessage();
+        }
+    }
+    private function processModuleFields($module, $document)
+    {
+        $bean = \BeanFactory::getBean($module, $this->moduleId);
+        foreach ($bean->getFieldDefinitions() as $key => $field) {
+            if (!isset($bean->$key)) {
+                $bean->$key = "";
+            }
+            $str = '$' . strtolower($module) . '_' . $field['name'];
+            // if ($str == '$aos_contracts_description') {
+            //     $tmp = "";
+            // }
+            if ($field['type'] == 'relate' && $field['source'] == 'non-db') {
+                if (!isset($field['id_name'])) {
+                    continue;
+                }
+
+                $id_name = $field['id_name'];
+                $rel_id = $bean->$id_name;
+                $rel_module = $field['module'];
+                $this->processRelatedModuleFields($field['module'], $rel_id, $key, $document);
+            } else if ($field['type'] == 'id' || $field['type'] == 'link' || $field['type'] == 'relate' || $field['dbType'] == 'id' || $field['name'] == 'deleted') {
+                continue;
+            } else if ($field['type'] == 'currency') {
+                $document->description = str_replace($str, $this->numberToCurrency($bean->$key), $document->description);
+                $document->pdfheader = str_replace($str, $this->numberToCurrency($bean->$key), $document->pdfheader);
+                $document->pdffooter = str_replace($str, $this->numberToCurrency($bean->$key), $document->pdffooter);
+            } else if ($field['type'] == 'datetime' || $field['type'] == 'date' || $field['type'] == 'datetimecombo') {
+                $document->description = str_replace($str, explode(' ', $bean->$key)[0], $document->description);
+                $document->pdfheader = str_replace($str, explode(' ', $bean->$key)[0], $document->pdfheader);
+                $document->pdffooter = str_replace($str, explode(' ', $bean->$key)[0], $document->pdffooter);
+            } else if ($field['type'] == 'bool') {
+                $document->description = str_replace($str, $bean->$key, $document->description);
+                $document->pdfheader = str_replace($str, $bean->$key, $document->pdfheader);
+                $document->pdffooter = str_replace($str, $bean->$key, $document->pdffooter);
+            } else if ($field['type'] == 'varchar' || $field['type'] == 'text') {
+                $document->description = str_replace($str, trim(preg_replace("~[\r\n]~", " ", str_replace("&", "&amp;amp;", $bean->$key))), $document->description);
+                $document->pdfheader = str_replace($str, htmlentities($bean->$key), $document->pdfheader);
+                $document->pdffooter = str_replace($str, htmlentities($bean->$key), $document->pdffooter);
+            } else {
+                $document->description = str_replace($str, htmlentities($bean->$key), $document->description);
+                $document->pdfheader = str_replace($str, htmlentities($bean->$key), $document->pdfheader);
+                $document->pdffooter = str_replace($str, htmlentities($bean->$key), $document->pdffooter);
+            }
+        }
+    }
+    private function processRelatedModuleFields($module, $id, $parentField, $document)
+    {
+        if (empty($id)) {
+            return;
+        }
+        $bean = \BeanFactory::getBean($module, $id);
+        if ($bean) {
+            foreach ($bean->getFieldDefinitions() as $key => $field) {
+                if (!isset($bean->$key)) {
+                    $bean->$key = "";
+                }
+                $str = '$' . $parentField . '_' . $field['name'];
+                // if ($str == '$paralegal_c_paralegel_c') {
+                //     $tmp = "";
+                // }
+                if ($field['type'] == 'id' || $field['type'] == 'link' || $field['dbType'] == 'id' || $field['name'] == 'deleted') {
+                    continue;
+                }
+                if ($field['type'] == 'relate') {
+                    $document->description = str_replace($str, htmlentities($bean->id), $document->description);
+                    $document->pdfheader = str_replace($str, htmlentities($bean->id), $document->pdfheader);
+                    $document->pdffooter = str_replace($str, htmlentities($bean->id), $document->pdffooter);
+                } else if ($field['type'] == 'currency') {
+                    $document->description = str_replace($str, $this->numberToCurrency($bean->$key), $document->description);
+                    $document->pdfheader = str_replace($str, $this->numberToCurrency($bean->$key), $document->pdfheader);
+                    $document->pdffooter = str_replace($str, $this->numberToCurrency($bean->$key), $document->pdffooter);
+                } else if ($field['type'] == 'datetime' || $field['type'] == 'date' || $field['type'] == 'datetimecombo') {
+                    $document->description = str_replace($str, explode(' ', $bean->$key)[0], $document->description);
+                    $document->pdfheader = str_replace($str, explode(' ', $bean->$key)[0], $document->pdfheader);
+                    $document->pdffooter = str_replace($str, explode(' ', $bean->$key)[0], $document->pdffooter);
+                } else if ($field['type'] == 'bool') {
+                    $document->description = str_replace($str, $bean->$key, $document->description);
+                    $document->pdfheader = str_replace($str, $bean->$key, $document->pdfheader);
+                    $document->pdffooter = str_replace($str, $bean->$key, $document->pdffooter);
+                } else if ($field['type'] == 'varchar') {
+                    $document->description = str_replace($str, trim(preg_replace("~[\r\n]~", " ", str_replace("&", "&amp;amp;", $bean->$key))), $document->description);
+                    $document->pdfheader = str_replace($str, htmlentities($bean->$key), $document->pdfheader);
+                    $document->pdffooter = str_replace($str, htmlentities($bean->$key), $document->pdffooter);
+                } else {
+                    $document->description = str_replace($str, htmlentities($bean->$key), $document->description);
+                    $document->pdfheader = str_replace($str, htmlentities($bean->$key), $document->pdfheader);
+                    $document->pdffooter = str_replace($str, htmlentities($bean->$key), $document->pdffooter);
+                }
+            }
+        }
+    }
+    private function getTextBlock($id)
+    {
+        $string = '';
+        if ($id != "") {
+            $textBlock = \BeanFactory::getBean('TextBlock', $id);
+            if (isset($textBlock)) {
+                $string =
+                    html_entity_decode($textBlock->textblock, ENT_QUOTES, 'UTF-8');
+            }
+        }
+
+        return $string;
+    }
+    private function getTextBlockByName($name, $blocktype = 'Body')
+    {
+        if (empty($name)) {
+            return '';
+        }
+
+        $string = '';
+        $textBlockBean = \BeanFactory::getBean('TextBlock');
+        $bean = $textBlockBean->retrieve_by_string_fields(
+            array(
+                'name' => $name,
+                'blocktype' => $blocktype,
+            )
+        );
+        if (isset($bean)) {
+            $string = html_entity_decode($bean->textblock, ENT_QUOTES, 'UTF-8');
+        }
+
+        return $string;
+    }
+    private function getExtraDetails($module_name, $id, $field)
+    {
+        $html = '';
+        if ($module_name == 'AOS_Invoices' || $module_name == 'AOS_Contracts') {
+            if ($module_name == 'AOS_Invoices') {
+                if (!isset($this->invoiceDetail)) {
+                    $this->invoiceDetail = \BeanFactory::getBean('AOS_Invoices', $id);
+                }
+                if (!isset($this->contractDetail)) {
+                    $this->contractDetail = \BeanFactory::getBean('AOS_Contracts', $this->invoiceDetail->aos_contracts_id_c);
+                }
+            } else {
+                if (!isset($this->contractDetail)) {
+                    $this->contractDetail = \BeanFactory::getBean('AOS_Contracts', $id);
+                }
+            }
+            if (!isset($this->quoteDetail)) {
+                $this->quoteDetail = \BeanFactory::getBean('AOS_Quotes', $this->contractDetail->quotation_id_c);
+            }
+            if (!isset($this->caseDetail)) {
+                $this->caseDetail = \BeanFactory::getBean('Cases', $this->quoteDetail->acase_id_c);
+            }
+            if (!isset($this->clientDetail)) {
+                $this->clientDetail = \BeanFactory::getBean('Accounts', $this->caseDetail->account_id);
+            }
+            if ($field == 'DESCRIPTION') {
+                $html = $this->caseDetail->quotation_id_c;
+            } elseif ($field == 'CLIENTTITLE') {
+                if ($this->clientDetail->personaltitle_c != '') {
+                    $html = $this->clientDetail->personaltitle_c;
+                }
+            } elseif ($field == 'CLIENTFIRSTNAME') {
+                $html = $this->clientDetail->cusfirstname_c;
+            } elseif ($field == 'CLIENTLASTNAME') {
+                $html = $this->clientDetail->cuslastname_c;
+            } elseif ($field == 'CLIENTSSNO') {
+                $html = $this->clientDetail->ssno_c;
+            } elseif ($field == 'CLIENTPHONE') {
+                $html = $this->clientDetail->phonework_c;
+            } elseif ($field == 'CLIENTADDRESS') {
+                $html = $this->clientDetail->billing_address_street;
+            } elseif ($field == 'CLIENTCITY') {
+                $html = $this->clientDetail->billing_address_city;
+            } elseif ($field == 'CLIENTSTATE') {
+                $html = $this->clientDetail->billing_address_state;
+            } elseif ($field == 'CLIENTZIPCODE') {
+                $html = $this->clientDetail->billing_address_postalcode;
+            } elseif ($field == 'JUDGENAME') {
+                if ($this->caseDetail->jd_judgeslist_id_c != '') {
+                    $judgeBean = \BeanFactory::getBean('jd_Judgeslist', $this->caseDetail->jd_judgeslist_id_c);
+                    $html = $judgeBean->name;
+                } else {
+                    $html = '';
+                }
+            } elseif ($field == 'PAYEETITLE') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    if ($this->caseDetail->payeetitle_c != '') {
+                        $html = $this->caseDetail->payeetitle_c;
+                    }
+                } else {
+                    if ($this->clientDetail->personaltitle_c != '') {
+                        $html = $this->clientDetail->personaltitle_c;
+                    }
+                }
+            } elseif ($field == 'PAYEEFIRSTNAME') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    $html = $this->caseDetail->case_payee_fname_c;
+                } else {
+                    $html = $this->clientDetail->cusfirstname_c;
+                }
+            } elseif ($field == 'PAYEELASTNAME') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    $html = $this->caseDetail->case_payee_lname_c;
+                } else {
+                    $html = $this->clientDetail->cuslastname_c;
+                }
+            } elseif ($field == 'PAYEESSNO') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    $html = $this->caseDetail->cases_payee_ssno_c;
+                } else {
+                    $html = $this->clientDetail->ssno_c;
+                }
+            } elseif ($field == 'PAYEEPHONE') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    $html = $this->caseDetail->cases_payee_mobile_phone_c;
+                } else {
+                    $html = $this->clientDetail->phonework_c;
+                }
+            } elseif ($field == 'PAYEEADDRESS') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    $html = $this->caseDetail->cases_payee_address_c;
+                } else {
+                    $html = $this->clientDetail->billing_address_street;
+                }
+            } elseif ($field == 'PAYEECITY') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    $html = $this->caseDetail->cases_payee_city_c;
+                } else {
+                    $html = $this->clientDetail->billing_address_city;
+                }
+            } elseif ($field == 'PAYEESTATE') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    $html = $this->caseDetail->cases_payee_state_c;
+                } else {
+                    $html = $this->clientDetail->billing_address_state;
+                }
+            } elseif ($field == 'PAYEEZIPCODE') {
+                if ($this->caseDetail->case_payee_option_c == 'obopayee') {
+                    $html = $this->caseDetail->cases_payee_postalcode_c;
+                } else {
+                    $html = $this->clientDetail->billing_address_postalcode;
+                }
+            } elseif ($field == 'CREATIONDATE') {
+                $html = $this->caseDetail->date_entered;
+            } elseif ($field == 'INITIALPDATE') {
+                $invoiceList = \BeanFactory::getBean('AOS_Invoices')->get_full_list('number', "aos_invoices_cstm.aos_contracts_id_c='{$this->contractDetail->id}'");
+                $initial_pdate;
+                foreach ($invoiceList as $key => $invoice) {
+                    if ($key == '0') {
+                        global $timedate;
+                        $initial_pdate = $invoice->due_date;
+                        $timezone = new \DateTimeZone($timedate->userTimezone());
+                        $dateTime = new \DateTime($initial_pdate, $timezone);
+                        $initial_pdate = explode(' ', $timedate->asUser($dateTime))[0];
+                    }
+                }
+                $html = $initial_pdate;
+            } elseif ($field == 'RETAINER_AMOUNT') {
+                $invoiceList = \BeanFactory::getBean('AOS_Invoices')->get_full_list('number', "aos_invoices_cstm.aos_contracts_id_c='{$this->contractDetail->id}'");
+                $retainer_amount;
+                foreach ($invoiceList as $key => $invoice) {
+                    if ($key == '0') {
+                        $retainer_amount = $invoice->total_amt;
+                    }
+                }
+                $html = $this->numberToCurrency($retainer_amount);
+            } elseif ($field == 'SERVICE_FEE_AMOUNT') {
+                $invoiceList = \BeanFactory::getBean('AOS_Invoices')->get_full_list('number', "aos_invoices_cstm.aos_contracts_id_c='{$this->contractDetail->id}' and aos_invoices_cstm.type_c='regular'");
+                $service_amount;
+                foreach ($invoiceList as $key => $invoice) {
+                    if ($key != '0') {
+                        $service_amount += $invoice->total_amt;
+                    }
+                }
+                $html = $this->numberToCurrency($service_amount);
+            } elseif ($field == 'BALANCE_AMOUNT') {
+                $balance_amount;
+                $balance_amount = ($this->invoiceDetail->total_amt + $this->invoiceDetail->collection_fee_c + $this->invoiceDetail->fix_late_charges_c + $this->invoiceDetail->late_charges_c) - $this->invoiceDetail->amount_paid_c;
+
+                $html = $this->numberToCurrency($balance_amount);
+            } elseif ($field == 'TOTAL_AMOUNT') {
+                $total_amount;
+                $total_amount = ($this->invoiceDetail->total_amt + $this->invoiceDetail->fix_late_charges_c + $this->invoiceDetail->late_charges_c) - $this->invoiceDetail->amount_paid_c;
+
+                $html = $this->numberToCurrency($total_amount);
+            } elseif ($field == 'REMAINING_AMOUNT') {
+                $remaining_amount;
+                $remaining_amount = $this->invoiceDetail->total_amt - $this->invoiceDetail->amount_paid_c;
+
+                $html = $this->numberToCurrency($remaining_amount);
+            } else {
+                $html = '';
+            }
+        }
+        return $html;
+    }
+
+    private function getAppearance($module_name, $id)
+    {
+        global $timedate;
+        $html = '';
+        $time_now = $GLOBALS['timedate']->nowDb();
+        if ($module_name == 'Cases') {
+            $court_Bean = \BeanFactory::getBean('ca_courtappearance');
+            $beanList = $court_Bean->get_full_list(
+                'court_appearance_date',
+                "ca_courtappearance.acase_id_c = '{$id}' and ca_courtappearance.deleted = '0' and ca_courtappearance.court_appearance_date >'{$time_now}'"
+            );
+            if ($beanList != '') {
+                $cdate;
+                $ctype;
+                foreach ($beanList as $key => $clist) {
+                    if ($key == '0') {
+                        $cdate = $clist->court_appearance_date;
+                        $ctype = translate('court_appearance_list', '', $clist->court_appearance_type);
+                        $dateTime = new \DateTime($cdate);
+                        $cdate = date_format(date_create($timedate->asUser($dateTime, $GLOBALS['current_user'])), "F, d Y \a\\t h:i A");
+                    }
+                }
+                $html = $cdate . " (" . $ctype . ")";
+            }
+        } elseif ($module_name == 'AOS_Quotes') {
+            $quote_Bean = \BeanFactory::getBean('AOS_Quotes', $id);
+            $court_Bean = \BeanFactory::getBean('ca_courtappearance');
+            $beanList = $court_Bean->get_full_list(
+                'court_appearance_date',
+                "ca_courtappearance.acase_id_c = '{$quote_Bean->acase_id_c}' and ca_courtappearance.deleted = '0' and ca_courtappearance.court_appearance_date > '{$time_now}'"
+            );
+            if ($beanList != '') {
+                $cdate;
+                $ctype;
+                foreach ($beanList as $key => $clist) {
+                    if ($key == '0') {
+                        $cdate = $clist->court_appearance_date;
+                        $ctype = translate('court_appearance_list', '', $clist->court_appearance_type);
+                        $dateTime = new \DateTime($cdate);
+                        $cdate = date_format(date_create($timedate->asUser($dateTime, $GLOBALS['current_user'])), "F, d Y \a\\t h:i A");
+                    }
+                }
+                $html = $cdate . " (" . $ctype . ")";
+            }
+        }
+
+        return $html;
+    }
+
+    private function getContractDetails($module_name, $id, $field)
+    {
+        $html = '';
+        if ($module_name == 'AOS_Contracts') {
+            if (!isset($this->contractDetail)) {
+                $this->contractDetail = \BeanFactory::getBean('AOS_Contracts', $id);
+            }
+            if (!isset($this->$installmentsList)) {
+                $this->installmentsList = \BeanFactory::getBean('Installment')->get_full_list('order_index', "installment.contract_id='{$this->contractDetail->id}'");
+            }
+
+            if ($field == 'RETAINER_AMOUNT') {
+                $retainer_amount;
+                foreach ($this->installmentsList as $key => $installment) {
+                    if ($key == '0') {
+                        if ($this->installment->invoice_id == '') {
+                            $retainer_amount = $installment->amount;
+                        } else {
+                            $invoice_detail = \BeanFactory::getBean('AOS_Invoices', $installment->invoice_id);
+                            if ($invoice_detail->type_c == 'regular') {
+                                $retainer_amount = $invoice_detail->total_amt;
+                            }
+                        }
+                    }
+                }
+                $html = $this->numberToCurrency($retainer_amount);
+            } elseif ($field == 'SERVICE_FEE_AMOUNT') {
+                $service_amount;
+                foreach ($this->installmentsList as $key => $installment) {
+                    if ($key != '0') {
+                        if ($installment->invoice_id == '') {
+                            $service_amount += $installment->amount;
+                        } else {
+                            $invoice_detail = \BeanFactory::getBean('AOS_Invoices', $installment->invoice_id);
+                            if ($invoice_detail->type_c == 'regular') {
+                                $service_amount += $invoice_detail->total_amt;
+                            }
+                        }
+                    }
+                }
+                $html = $this->numberToCurrency($service_amount);
+            } else {
+                $html = '';
+            }
+        }
+        return $html;
+    }
+
+    private function getLineItems($id)
+    {
+        global $db, $locale;
+        $sql = "select * from aos_line_item_groups where id in(select distinct group_id from aos_products_quotes where parent_id='" . $id . "' and  deleted = 0 order by number asc) order by number asc";
+        $results = $db->query($sql);
+        $html = '';
+        $rownumber = 1;
+
+        while ($row = $db->fetchByAssoc($results)) {
+            $html .= '<p style="font-family:Lyon Text Regular; text-align:center; background-color: #008080; font-size: 12pt; color: #ffffff;"><b>' . $rownumber . ': ' . $row['name'] . '</b></p>';
+            $html .= '<table border="1"  style="width: 100%;border:1px #000000 solid; padding: 5px; font-family:Lyon Text Regular;">';
+            $innerQuery = "SELECT * FROM aos_products_quotes where parent_id='" . $id . "' and group_id='" . $row['id'] . "' and  deleted = 0 order by number asc"; // order by product_total_price desc";
+            $innerResults = $db->query($innerQuery);
+            $html .= '<tr>';
+            $html .= '<td>';
+            $html .= '<b>' . 'Attorney' . '</b>';
+            $html .= '</td>';
+            $html .= '<td>';
+            $html .= '<b>' . 'Normal Price' . '</b>';
+            $html .= '</td>';
+            $html .= '<td>';
+            $html .= '<b>' . 'Non-refundable' . '</b>';
+            $html .= '</td>';
+            $html .= '<td>';
+            $html .= '<b>' . $row['description'] . '</b>';
+            $html .= '</td>';
+            $html .= '</tr>';
+            while ($innerRow = $db->fetchByAssoc($innerResults)) {
+                $html .= '<tr>';
+                $html .= '<td>';
+                $html .= $innerRow['name'];
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= $this->numberToCurrency($innerRow['product_list_price']);
+                $html .= '</td>';
+                $html .= '<td>';
+                if ($innerRow['discount'] == 'Financing') {
+                    if (number_format((float) $innerRow['product_discount'], 2, '.', '') == 0) {
+                        $html .= $this->numberToCurrency($innerRow['product_list_price']);
+                    } else {
+                        $tamount = ($innerRow['product_list_price'] * $innerRow['product_discount']) / 100;
+                        $html .= $locale->getPrecedentPreference('default_currency_symbol') . number_format(($innerRow['product_list_price'] - $tamount), 2, '.', '');
+                    }
+                } else {
+                    $html .= $this->numberToCurrency($innerRow['product_total_price']);
+                }
+                $html .= '</td>';
+                $html .= '<td>';
+                if ($innerRow['discount'] == 'Amount') {
+                    $html .= $this->numberToCurrency($innerRow['product_discount']);
+                } else if ($innerRow['discount'] == 'Financing') {
+                    if (number_format((float) $innerRow['product_discount'], 2, '.', '') == 0) {
+                        $html .= $this->numberToCurrency($innerRow['product_list_price']);
+                    } else {
+                        $tamount = ($innerRow['product_list_price'] * $innerRow['product_discount']) / 100;
+                        $html .= $locale->getPrecedentPreference('default_currency_symbol') . number_format($tamount, 2, '.', '');
+                    }
+                } else {
+                    if (number_format((float) $innerRow['product_discount'], 0) == 0) {
+                        $html .= $this->numberToCurrency($innerRow['product_list_price']);
+                    } else {
+                        $tamount = ($innerRow['product_list_price'] * $innerRow['product_discount']) / 100;
+                        $html .= $locale->getPrecedentPreference('default_currency_symbol') . number_format($tamount, 2, '.', '');
+                    }
+                }
+                $html .= '</td>';
+                $html .= '</tr>';
+            }
+            $rownumber++;
+            $html .= '</table>';
+            $html .= '<br />';
+        }
+
+        return $html;
+    }
+    private function numberToCurrency($number)
+    {
+        global $locale;
+        return $locale->getPrecedentPreference('default_currency_symbol') . number_format(($number == '' ? ((float) '00.00') : ((float) $number)), 2, '.', '');
+    }
+    private function numberToPercent($number)
+    {
+        global $locale;
+        return number_format(($number == '' ? '00.00' : $number), 0) . '%';
+    }
+
+    private function numberToint($number)
+    {
+        global $locale;
+        return number_format(($number == '' ? '00.00' : $number), 0);
+    }
+    private function dateSub($dateStr, $days, $option)
+    {
+        global $timedate;
+        $timezone = new \DateTimeZone($timedate->userTimezone());
+        $dateTime = new \DateTime($dateStr, $timezone);
+        $dateInterval = new \DateInterval('P' . abs($days) . strtoupper($option));
+        if ($days > 0) {
+            $dateTime->add($dateInterval);
+        } else {
+            $dateTime->sub($dateInterval);
+        }
+
+        return explode(' ', $timedate->asUser($dateTime))[0]; //also could use asUser e.t.c.
+    }
+    private function dateSubCourtAppearance($dateStr, $days, $option)
+    {
+        global $timedate;
+        $timezone = new \DateTimeZone($timedate->userTimezone());
+        $dateTime = new \DateTime($dateStr, $timezone);
+        $dateInterval = new \DateInterval('P' . abs($days) . strtoupper($option));
+        if ($days > 0) {
+            $dateTime->add($dateInterval);
+        } else {
+            $dateTime->sub($dateInterval);
+        }
+        $cdate = explode(' ', $timedate->asUser($dateTime))[0] . ' ' . explode(' ', $timedate->asUser($dateTime))[1];
+        $cAppearDate .= date_format(date_create($cdate), "F, d Y \a\\t h:i A");
+
+        return $cAppearDate;
+    }
+
+    private function current_user_date()
+    {
+        global $timedate;
+        $dateStr = $GLOBALS['timedate']->getNow();
+        $dateTime = new \DateTime($dateStr);
+        $userdate = date_create(explode(' ', $timedate->asUser($dateTime, $GLOBALS['current_user']))[0]);
+        $userdate = date_format($userdate, 'F d, Y');
+        return $userdate;
+    }
+
+    private function current_user_date_numeric()
+    {
+        global $timedate;
+        $dateStr = $GLOBALS['timedate']->getNow();
+        $dateTime = new \DateTime($dateStr);
+        return explode(' ', $timedate->asUser($dateTime, $GLOBALS['current_user']))[0];
+    }
+
+    private function current_user_time()
+    {
+        global $timedate;
+        $dateStr = $GLOBALS['timedate']->getNow();
+        $dateTime = new \DateTime($dateStr);
+        return explode(' ', $timedate->asUser($dateTime, $GLOBALS['current_user']))[1];
+    }
+
+    private function current_user_datetime()
+    {
+        global $timedate;
+        $dateStr = $GLOBALS['timedate']->getNow();
+        $dateTime = new \DateTime($dateStr);
+        return $timedate->asUser($dateTime, $GLOBALS['current_user']);
+    }
+}
