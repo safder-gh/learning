@@ -1,6 +1,7 @@
 
-https://www.youtube.com/watch?v=GqSRnbxFnQ0&list=PL6n9fhu94yhUbctIoxoVTrklN3LMwTCmd&index=16
+https://www.youtube.com/watch?v=EXuaKKAlfqE&list=PL6n9fhu94yhUbctIoxoVTrklN3LMwTCmd&index=19
 http://www.pipsomania.com/best_php_obfuscator.do
+https://www.dofactory.com/net/bridge-design-pattern
 
 
 array(
