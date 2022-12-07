@@ -1,0 +1,14 @@
+E:\learning\DoFactory\AbstractFactory\bin\Debug\netcoreapp3.1\AbstractFactory.exe
+E:\learning\DoFactory\AbstractFactory\bin\Debug\netcoreapp3.1\AbstractFactory.deps.json
+E:\learning\DoFactory\AbstractFactory\bin\Debug\netcoreapp3.1\AbstractFactory.runtimeconfig.json
+E:\learning\DoFactory\AbstractFactory\bin\Debug\netcoreapp3.1\AbstractFactory.runtimeconfig.dev.json
+E:\learning\DoFactory\AbstractFactory\bin\Debug\netcoreapp3.1\AbstractFactory.dll
+E:\learning\DoFactory\AbstractFactory\bin\Debug\netcoreapp3.1\AbstractFactory.pdb
+E:\learning\DoFactory\AbstractFactory\obj\Debug\netcoreapp3.1\AbstractFactory.csproj.AssemblyReference.cache
+E:\learning\DoFactory\AbstractFactory\obj\Debug\netcoreapp3.1\AbstractFactory.GeneratedMSBuildEditorConfig.editorconfig
+E:\learning\DoFactory\AbstractFactory\obj\Debug\netcoreapp3.1\AbstractFactory.AssemblyInfoInputs.cache
+E:\learning\DoFactory\AbstractFactory\obj\Debug\netcoreapp3.1\AbstractFactory.AssemblyInfo.cs
+E:\learning\DoFactory\AbstractFactory\obj\Debug\netcoreapp3.1\AbstractFactory.csproj.CoreCompileInputs.cache
+E:\learning\DoFactory\AbstractFactory\obj\Debug\netcoreapp3.1\AbstractFactory.dll
+E:\learning\DoFactory\AbstractFactory\obj\Debug\netcoreapp3.1\AbstractFactory.pdb
+E:\learning\DoFactory\AbstractFactory\obj\Debug\netcoreapp3.1\AbstractFactory.genruntimeconfig.cache

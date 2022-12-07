@@ -1,3 +1,4 @@
+https://www.javatpoint.com/abstract-factory-pattern
 https://www.youtube.com/watch?v=qI_v31n1ZTk&list=PLQmpEDfo4nzHIA9Ck6KlGUR9gAlhCtg57
 https://www.youtube.com/watch?v=YObNH6IkIos&list=PL6n9fhu94yhUbctIoxoVTrklN3LMwTCmd&index=20
 http://www.pipsomania.com/best_php_obfuscator.do

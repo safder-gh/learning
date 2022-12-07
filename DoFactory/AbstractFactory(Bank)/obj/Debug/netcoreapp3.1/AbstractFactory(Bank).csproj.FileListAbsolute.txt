@@ -1,0 +1,14 @@
+E:\learning\DoFactory\AbstractFactory(Bank)\bin\Debug\netcoreapp3.1\AbstractFactory(Bank).exe
+E:\learning\DoFactory\AbstractFactory(Bank)\bin\Debug\netcoreapp3.1\AbstractFactory(Bank).dll
+E:\learning\DoFactory\AbstractFactory(Bank)\bin\Debug\netcoreapp3.1\AbstractFactory(Bank).deps.json
+E:\learning\DoFactory\AbstractFactory(Bank)\bin\Debug\netcoreapp3.1\AbstractFactory(Bank).runtimeconfig.json
+E:\learning\DoFactory\AbstractFactory(Bank)\bin\Debug\netcoreapp3.1\AbstractFactory(Bank).runtimeconfig.dev.json
+E:\learning\DoFactory\AbstractFactory(Bank)\bin\Debug\netcoreapp3.1\AbstractFactory(Bank).pdb
+E:\learning\DoFactory\AbstractFactory(Bank)\obj\Debug\netcoreapp3.1\AbstractFactory(Bank).csproj.AssemblyReference.cache
+E:\learning\DoFactory\AbstractFactory(Bank)\obj\Debug\netcoreapp3.1\AbstractFactory(Bank).GeneratedMSBuildEditorConfig.editorconfig
+E:\learning\DoFactory\AbstractFactory(Bank)\obj\Debug\netcoreapp3.1\AbstractFactory(Bank).AssemblyInfoInputs.cache
+E:\learning\DoFactory\AbstractFactory(Bank)\obj\Debug\netcoreapp3.1\AbstractFactory(Bank).AssemblyInfo.cs
+E:\learning\DoFactory\AbstractFactory(Bank)\obj\Debug\netcoreapp3.1\AbstractFactory(Bank).csproj.CoreCompileInputs.cache
+E:\learning\DoFactory\AbstractFactory(Bank)\obj\Debug\netcoreapp3.1\AbstractFactory(Bank).dll
+E:\learning\DoFactory\AbstractFactory(Bank)\obj\Debug\netcoreapp3.1\AbstractFactory(Bank).pdb
+E:\learning\DoFactory\AbstractFactory(Bank)\obj\Debug\netcoreapp3.1\AbstractFactory(Bank).genruntimeconfig.cache

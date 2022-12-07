@@ -1,0 +1,14 @@
+E:\learning\DoFactory\FactoryMethod\bin\Debug\netcoreapp3.1\FactoryMethod.exe
+E:\learning\DoFactory\FactoryMethod\bin\Debug\netcoreapp3.1\FactoryMethod.deps.json
+E:\learning\DoFactory\FactoryMethod\bin\Debug\netcoreapp3.1\FactoryMethod.runtimeconfig.json
+E:\learning\DoFactory\FactoryMethod\bin\Debug\netcoreapp3.1\FactoryMethod.runtimeconfig.dev.json
+E:\learning\DoFactory\FactoryMethod\bin\Debug\netcoreapp3.1\FactoryMethod.dll
+E:\learning\DoFactory\FactoryMethod\bin\Debug\netcoreapp3.1\FactoryMethod.pdb
+E:\learning\DoFactory\FactoryMethod\obj\Debug\netcoreapp3.1\FactoryMethod.csproj.AssemblyReference.cache
+E:\learning\DoFactory\FactoryMethod\obj\Debug\netcoreapp3.1\FactoryMethod.GeneratedMSBuildEditorConfig.editorconfig
+E:\learning\DoFactory\FactoryMethod\obj\Debug\netcoreapp3.1\FactoryMethod.AssemblyInfoInputs.cache
+E:\learning\DoFactory\FactoryMethod\obj\Debug\netcoreapp3.1\FactoryMethod.AssemblyInfo.cs
+E:\learning\DoFactory\FactoryMethod\obj\Debug\netcoreapp3.1\FactoryMethod.csproj.CoreCompileInputs.cache
+E:\learning\DoFactory\FactoryMethod\obj\Debug\netcoreapp3.1\FactoryMethod.dll
+E:\learning\DoFactory\FactoryMethod\obj\Debug\netcoreapp3.1\FactoryMethod.pdb
+E:\learning\DoFactory\FactoryMethod\obj\Debug\netcoreapp3.1\FactoryMethod.genruntimeconfig.cache
