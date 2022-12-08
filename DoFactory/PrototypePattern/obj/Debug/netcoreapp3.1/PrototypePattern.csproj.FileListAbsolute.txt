@@ -1,0 +1,14 @@
+E:\learning\DoFactory\PrototypePattern\bin\Debug\netcoreapp3.1\PrototypePattern.exe
+E:\learning\DoFactory\PrototypePattern\bin\Debug\netcoreapp3.1\PrototypePattern.deps.json
+E:\learning\DoFactory\PrototypePattern\bin\Debug\netcoreapp3.1\PrototypePattern.runtimeconfig.json
+E:\learning\DoFactory\PrototypePattern\bin\Debug\netcoreapp3.1\PrototypePattern.runtimeconfig.dev.json
+E:\learning\DoFactory\PrototypePattern\bin\Debug\netcoreapp3.1\PrototypePattern.dll
+E:\learning\DoFactory\PrototypePattern\bin\Debug\netcoreapp3.1\PrototypePattern.pdb
+E:\learning\DoFactory\PrototypePattern\obj\Debug\netcoreapp3.1\PrototypePattern.csproj.AssemblyReference.cache
+E:\learning\DoFactory\PrototypePattern\obj\Debug\netcoreapp3.1\PrototypePattern.GeneratedMSBuildEditorConfig.editorconfig
+E:\learning\DoFactory\PrototypePattern\obj\Debug\netcoreapp3.1\PrototypePattern.AssemblyInfoInputs.cache
+E:\learning\DoFactory\PrototypePattern\obj\Debug\netcoreapp3.1\PrototypePattern.AssemblyInfo.cs
+E:\learning\DoFactory\PrototypePattern\obj\Debug\netcoreapp3.1\PrototypePattern.csproj.CoreCompileInputs.cache
+E:\learning\DoFactory\PrototypePattern\obj\Debug\netcoreapp3.1\PrototypePattern.dll
+E:\learning\DoFactory\PrototypePattern\obj\Debug\netcoreapp3.1\PrototypePattern.pdb
+E:\learning\DoFactory\PrototypePattern\obj\Debug\netcoreapp3.1\PrototypePattern.genruntimeconfig.cache

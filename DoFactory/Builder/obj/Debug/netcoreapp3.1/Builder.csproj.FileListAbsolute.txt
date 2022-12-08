@@ -1,0 +1,14 @@
+E:\learning\DoFactory\Builder\bin\Debug\netcoreapp3.1\Builder.exe
+E:\learning\DoFactory\Builder\bin\Debug\netcoreapp3.1\Builder.deps.json
+E:\learning\DoFactory\Builder\bin\Debug\netcoreapp3.1\Builder.runtimeconfig.json
+E:\learning\DoFactory\Builder\bin\Debug\netcoreapp3.1\Builder.runtimeconfig.dev.json
+E:\learning\DoFactory\Builder\bin\Debug\netcoreapp3.1\Builder.dll
+E:\learning\DoFactory\Builder\bin\Debug\netcoreapp3.1\Builder.pdb
+E:\learning\DoFactory\Builder\obj\Debug\netcoreapp3.1\Builder.csproj.AssemblyReference.cache
+E:\learning\DoFactory\Builder\obj\Debug\netcoreapp3.1\Builder.GeneratedMSBuildEditorConfig.editorconfig
+E:\learning\DoFactory\Builder\obj\Debug\netcoreapp3.1\Builder.AssemblyInfoInputs.cache
+E:\learning\DoFactory\Builder\obj\Debug\netcoreapp3.1\Builder.AssemblyInfo.cs
+E:\learning\DoFactory\Builder\obj\Debug\netcoreapp3.1\Builder.csproj.CoreCompileInputs.cache
+E:\learning\DoFactory\Builder\obj\Debug\netcoreapp3.1\Builder.dll
+E:\learning\DoFactory\Builder\obj\Debug\netcoreapp3.1\Builder.pdb
+E:\learning\DoFactory\Builder\obj\Debug\netcoreapp3.1\Builder.genruntimeconfig.cache
