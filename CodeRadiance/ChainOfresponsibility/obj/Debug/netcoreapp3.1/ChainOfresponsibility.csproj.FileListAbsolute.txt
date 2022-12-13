@@ -1,0 +1,14 @@
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\bin\Debug\netcoreapp3.1\ChainOfresponsibility.exe
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\bin\Debug\netcoreapp3.1\ChainOfresponsibility.deps.json
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\bin\Debug\netcoreapp3.1\ChainOfresponsibility.runtimeconfig.json
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\bin\Debug\netcoreapp3.1\ChainOfresponsibility.runtimeconfig.dev.json
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\bin\Debug\netcoreapp3.1\ChainOfresponsibility.dll
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\bin\Debug\netcoreapp3.1\ChainOfresponsibility.pdb
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\obj\Debug\netcoreapp3.1\ChainOfresponsibility.csproj.AssemblyReference.cache
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\obj\Debug\netcoreapp3.1\ChainOfresponsibility.GeneratedMSBuildEditorConfig.editorconfig
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\obj\Debug\netcoreapp3.1\ChainOfresponsibility.AssemblyInfoInputs.cache
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\obj\Debug\netcoreapp3.1\ChainOfresponsibility.AssemblyInfo.cs
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\obj\Debug\netcoreapp3.1\ChainOfresponsibility.csproj.CoreCompileInputs.cache
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\obj\Debug\netcoreapp3.1\ChainOfresponsibility.dll
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\obj\Debug\netcoreapp3.1\ChainOfresponsibility.pdb
+C:\SG-IMPORTENT\learning\CodeRadiance\ChainOfresponsibility\obj\Debug\netcoreapp3.1\ChainOfresponsibility.genruntimeconfig.cache
