@@ -5,8 +5,4 @@ http://www.pipsomania.com/best_php_obfuscator.do
 https://www.dofactory.com/net/bridge-design-pattern
 
 
-array(
-                        'pageSizeW' => $paper->getWidth(), 
-                        'pageSizeH' => $paper->getHeight(), 
-                        'orientation' => empty($documentBean->orientation) ? 'portrait' :strtolower($documentBean->orientation)
-                    )
+https://www.windowscentral.com/how-run-linux-distros-windows-10-using-hyper-v
