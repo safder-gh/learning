@@ -1,0 +1,8 @@
+E:\learning\CSharp-Corner\AbstractFactory\obj\Debug\AbstractFactory.csproj.AssemblyReference.cache
+E:\learning\CSharp-Corner\AbstractFactory\obj\Debug\AbstractFactory.csproj.SuggestedBindingRedirects.cache
+E:\learning\CSharp-Corner\AbstractFactory\obj\Debug\AbstractFactory.csproj.CoreCompileInputs.cache
+E:\learning\CSharp-Corner\AbstractFactory\bin\Debug\AbstractFactory.exe.config
+E:\learning\CSharp-Corner\AbstractFactory\bin\Debug\AbstractFactory.exe
+E:\learning\CSharp-Corner\AbstractFactory\bin\Debug\AbstractFactory.pdb
+E:\learning\CSharp-Corner\AbstractFactory\obj\Debug\AbstractFactory.exe
+E:\learning\CSharp-Corner\AbstractFactory\obj\Debug\AbstractFactory.pdb
