@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33027.164
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoWeb", "EFDemoWeb\EFDemoWeb.csproj", "{1891CEB9-AC94-445F-A04D-3402C3082AD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDAL", "EFDAL\EFDAL.csproj", "{F6AED5F1-0393-4EA0-84A0-03C14632BB0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1891CEB9-AC94-445F-A04D-3402C3082AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1891CEB9-AC94-445F-A04D-3402C3082AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1891CEB9-AC94-445F-A04D-3402C3082AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1891CEB9-AC94-445F-A04D-3402C3082AD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6AED5F1-0393-4EA0-84A0-03C14632BB0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6AED5F1-0393-4EA0-84A0-03C14632BB0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6AED5F1-0393-4EA0-84A0-03C14632BB0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6AED5F1-0393-4EA0-84A0-03C14632BB0E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E484DFE7-094A-430C-B0B3-12B56072EEFE}
+	EndGlobalSection
+EndGlobal
