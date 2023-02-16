@@ -1,0 +1,19 @@
+<img
+  *ngIf="!movies"
+  src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif?20170503175831"
+  alt=""
+/>
+<h1>{{ title }}</h1>
+<ng-container *ngIf="true">
+  <div
+    *ngFor="let index = index; let movie; of: movies"
+    class="movie-container"
+  >
+    <div>
+      {{ index }}){{ movie.title }}
+      <button (click)="remove(index)">Remove</button>
+    </div>
+    <div>{{ movie.releaseDate | date }}</div>
+    <div>{{ movie.price | currency }}</div>
+  </div>
+</ng-container>
