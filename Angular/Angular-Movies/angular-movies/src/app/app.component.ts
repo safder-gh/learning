@@ -7,10 +7,10 @@ import { Component,OnInit } from '@angular/core';
 })
 export class AppComponent  implements OnInit {
 ngOnInit():void{
-  setTimeout(() => {
-    this.title="I have changed after 3 second";
-  }, 3000);
+
+
+
 }
-title ='angular-movies';
+
 
 }

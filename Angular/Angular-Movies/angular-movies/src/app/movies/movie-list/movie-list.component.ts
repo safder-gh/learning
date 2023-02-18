@@ -7,31 +7,15 @@ import { Component,OnInit ,Input} from '@angular/core';
 })
 export class MovieListComponent implements OnInit {
   ngOnInit():void {
-    setTimeout(() => {
-      this.movies=[{
-        title :'Mission Im possible',
-        releaseDate : new Date(),
-        price :99.9
-      },{
-        title :'Mission Im possible',
-        releaseDate : new Date(),
-        price :99.9
-      },{
-        title :'Mission Im possible',
-        releaseDate : new Date(),
-        price :99.9
-      },{
-        title :'Mission Im possible',
-        releaseDate : new Date(),
-        price :99.9
-      },];
-    }, 2000);
+
 
   }
+  @Input()
   movies;
   @Input()
   title ='Pakistani Movies';
   remove(index:number){
-    console.log(index);
+    this.movies.splice(index,1)
+    console.log(index)
   }
 }
