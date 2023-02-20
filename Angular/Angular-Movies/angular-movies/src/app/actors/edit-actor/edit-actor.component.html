@@ -1,1 +1,5 @@
-<p>edit-actor works!</p>
+<h2>Edit Actor</h2>
+<app-form-actor
+  (onSaveChanges)="saveChanges($event)"
+  [model]="model"
+></app-form-actor>
