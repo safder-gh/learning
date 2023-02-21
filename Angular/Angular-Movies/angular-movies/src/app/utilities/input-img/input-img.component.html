@@ -13,5 +13,8 @@
     <div *ngIf="imageBase64">
       <img [src]="imageBase64" alt="" />
     </div>
+    <div *ngIf="urlCurrentImage !== ''">
+      <img [src]="urlCurrentImage" alt="" />
+    </div>
   </div>
 </div>

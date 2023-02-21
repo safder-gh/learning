@@ -1,2 +1,5 @@
 <h2>Create</h2>
-<app-form-actor (onSaveChanges)="saveChanges($event)"></app-form-actor>
+<app-form-actor
+  [model]="model"
+  (onSaveChanges)="saveChanges($event)"
+></app-form-actor>

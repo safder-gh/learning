@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { actorCreationDTO } from '../actors.model';
+import { actorCreationDTO, actorDTO } from '../actors.model';
 
 @Component({
   selector: 'app-create-actor',
@@ -7,6 +7,12 @@ import { actorCreationDTO } from '../actors.model';
   styleUrls: ['./create-actor.component.css']
 })
 export class CreateActorComponent {
+  model:actorDTO ={
+    name:'',
+    dateOfBirth:new Date(),
+    picture:'',
+    biography:''
+  }
 
   saveChanges(actorCreationDTO:actorCreationDTO){
     console.log(actorCreationDTO)

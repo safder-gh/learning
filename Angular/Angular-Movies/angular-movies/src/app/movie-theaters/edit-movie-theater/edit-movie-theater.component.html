@@ -1,1 +1,5 @@
-<p>edit-movie-theater works!</p>
+<h2>Edit Movie Theater</h2>
+<app-movie-theater-from
+  [model]="model"
+  (onSaveChanges)="saveChanges($event)"
+></app-movie-theater-from>

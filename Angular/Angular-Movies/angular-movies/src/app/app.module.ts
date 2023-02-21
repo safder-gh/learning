@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MovieListComponent } from './movies/movie-list/movie-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MaterialModule} from './material/material.module';
+import { MaterialModule } from './material/material.module';
 import { MenuComponent } from './menu/menu.component';
 import { RatingComponent } from './utilities/rating/rating.component';
 import { GenericListComponent } from './utilities/generic-list/generic-list.component';
@@ -21,11 +21,16 @@ import { EditActorComponent } from './actors/edit-actor/edit-actor.component';
 import { EditMovieComponent } from './movies/edit-movie/edit-movie.component';
 import { EditMovieTheaterComponent } from './movie-theaters/edit-movie-theater/edit-movie-theater.component';
 import { EditGenreComponent } from './genres/edit-genre/edit-genre.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FormGenreComponent } from './genres/form-genre/form-genre.component';
 import { MovieFilterComponent } from './movies/movie-filter/movie-filter.component';
 import { FormActorComponent } from './actors/form-actor/form-actor.component';
 import { InputImgComponent } from './utilities/input-img/input-img.component';
+import { InputMarkdownComponent } from './utilities/input-markdown/input-markdown.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { MovieTheaterFromComponent } from './movie-theaters/movie-theater-from/movie-theater-from.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapComponent } from './utilities/map/map.component';
 
 @NgModule({
   declarations: [
@@ -49,16 +54,22 @@ import { InputImgComponent } from './utilities/input-img/input-img.component';
     FormGenreComponent,
     MovieFilterComponent,
     FormActorComponent,
-    InputImgComponent
+    InputImgComponent,
+    InputMarkdownComponent,
+    MovieTheaterFromComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    MarkdownModule.forRoot(),
+    LeafletModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
