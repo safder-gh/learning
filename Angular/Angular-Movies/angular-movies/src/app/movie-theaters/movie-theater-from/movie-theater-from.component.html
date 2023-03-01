@@ -5,7 +5,10 @@
     <mat-error>The name field is required.</mat-error>
   </mat-form-field>
   <h4>Select Theater Location</h4>
-  <app-map (onSelectedLocation)="onSelectedLocation($event)"></app-map>
+  <app-map
+    (onSelectedLocation)="onSelectedLocation($event)"
+    [initialCoordinate]="initialCoordinate"
+  ></app-map>
   <div>
     <button mat-flat-button color="primary" [disabled]="form.invalid">
       Save Changes

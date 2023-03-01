@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { movieTheaterCreationDTO } from '../movie-theaters.model';
+import {
+  movieTheaterCreationDTO,
+  movieTheaterDTO,
+} from '../movie-theaters.model';
 import { coordinatesMap } from '../../utilities/map/coordinate';
 
 @Component({
@@ -11,9 +14,11 @@ import { coordinatesMap } from '../../utilities/map/coordinate';
 export class MovieTheaterFromComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
   @Input()
-  model!: movieTheaterCreationDTO;
+  model!: movieTheaterDTO;
   @Output()
   onSaveChanges = new EventEmitter<movieTheaterCreationDTO>();
+
+  initialCoordinate: coordinatesMap[] = [];
 
   form!: FormGroup;
   ngOnInit(): void {
@@ -40,6 +45,10 @@ export class MovieTheaterFromComponent implements OnInit {
     if (this.model !== undefined) {
       this.form.patchValue(this.model);
     }
+    this.initialCoordinate.push({
+      latitude: this.model.latitude,
+      longitude: this.model.longitude,
+    });
   }
   onSelectedLocation(coordinates: coordinatesMap) {
     this.form.patchValue(coordinates);

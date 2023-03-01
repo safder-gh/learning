@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import {
   latLng,
   LatLng,
@@ -15,7 +15,15 @@ import { coordinatesMap } from './coordinate';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
 })
-export class MapComponent {
+export class MapComponent implements OnInit {
+  ngOnInit(): void {
+    this.layers = this.initialCoordinate.map((value) =>
+      marker([value.latitude, value.longitude])
+    );
+    console.log(this.initialCoordinate);
+  }
+  @Input()
+  initialCoordinate: coordinatesMap[] = [];
   @Output()
   onSelectedLocation = new EventEmitter<coordinatesMap>();
   options = {
@@ -32,7 +40,7 @@ export class MapComponent {
   handleMapClick(event: LeafletMouseEvent) {
     const latitude = event.latlng.lat;
     const longitude = event.latlng.lng;
-    console.log(latitude, longitude);
+    console.log(latitude, longitude, this.initialCoordinate);
     this.layers = [];
     this.layers.push(marker([latitude, longitude]));
     this.onSelectedLocation.emit({ latitude, longitude });

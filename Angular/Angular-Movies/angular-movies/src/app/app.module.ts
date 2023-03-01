@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,7 +31,12 @@ import { InputMarkdownComponent } from './utilities/input-markdown/input-markdow
 import { MarkdownModule } from 'ngx-markdown';
 import { MovieTheaterFromComponent } from './movie-theaters/movie-theater-from/movie-theater-from.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+// import 'leaflet/dist/images/marker-shadow.png';
 import { MapComponent } from './utilities/map/map.component';
+import { FormMovieComponent } from './movies/form-movie/form-movie.component';
+import { MultipleSelectorComponent } from './utilities/multiple-selector/multiple-selector.component';
+import { ActorsAutocompleteComponent } from './actors/actors-autocomplete/actors-autocomplete.component';
+import { DisplayErrorsComponent } from './utilities/display-errors/display-errors.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +64,10 @@ import { MapComponent } from './utilities/map/map.component';
     InputMarkdownComponent,
     MovieTheaterFromComponent,
     MapComponent,
+    FormMovieComponent,
+    MultipleSelectorComponent,
+    ActorsAutocompleteComponent,
+    DisplayErrorsComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +78,7 @@ import { MapComponent } from './utilities/map/map.component';
     FormsModule,
     MarkdownModule.forRoot(),
     LeafletModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

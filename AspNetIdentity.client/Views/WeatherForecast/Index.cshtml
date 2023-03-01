@@ -1,0 +1,7 @@
+﻿@using AspNetIdentityDemo.Shared;
+@model IEnumerable<WeatherForecast>
+
+@foreach(WeatherForecast weatherForecast in Model)
+            {
+                <span>@weatherForecast.Summary</span>
+            }
